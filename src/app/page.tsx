@@ -213,7 +213,7 @@ export default function Home() {
               Acasă
             </Link>
             <Link 
-              href="#despre" 
+              href="/despre-noi" 
               className="nav-link"
               style={{
                 textDecoration: 'none',

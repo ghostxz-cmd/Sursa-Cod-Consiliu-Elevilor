@@ -8,7 +8,6 @@ export async function GET(
   try {
     const { id } = await params;
 
-    // Preluăm anunțul
     const { data: anunt, error } = await supabase
       .from('anunturi')
       .select('*')
@@ -21,7 +20,6 @@ export async function GET(
       return NextResponse.json({ error: 'Anunt not found' }, { status: 404 });
     }
 
-    // Incrementăm vizualizările
     const { error: updateError } = await supabase
       .from('anunturi')
       .update({ vizualizari: (anunt.vizualizari || 0) + 1 })
@@ -46,7 +44,6 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    // Verificăm autentificarea
     const sessionToken = request.cookies.get('admin_session')?.value;
     if (!sessionToken) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

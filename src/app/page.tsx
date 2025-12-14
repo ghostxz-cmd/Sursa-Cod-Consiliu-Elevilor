@@ -246,7 +246,7 @@ export default function Home() {
               Anunturi
             </Link>
             <Link 
-              href="#galerie" 
+              href="/galerie" 
               className="nav-link"
               style={{
                 textDecoration: 'none',

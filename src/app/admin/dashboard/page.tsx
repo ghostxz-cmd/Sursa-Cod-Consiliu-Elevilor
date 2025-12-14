@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import BlogEditor from '@/components/BlogEditor';
 import AnuntEditor from '@/components/AnuntEditor';
+import AlbumEditor from '@/components/AlbumEditor';
 
 interface DashboardStats {
   totalAnunturi: number;
@@ -29,6 +30,8 @@ export default function AdminDashboard() {
   const [loadingContent, setLoadingContent] = useState(false);
   const [showBlogEditor, setShowBlogEditor] = useState(false);
   const [showAnuntEditor, setShowAnuntEditor] = useState(false);
+  const [showAlbumEditor, setShowAlbumEditor] = useState(false);
+  const [albume, setAlbume] = useState<any[]>([]);
   const [analyticsData, setAnalyticsData] = useState<any>(null);
 
   useEffect(() => {
@@ -42,6 +45,8 @@ export default function AdminDashboard() {
       loadAnunturi();
     } else if (activeSection === 'blog') {
       loadBlog();
+    } else if (activeSection === 'galerie') {
+      loadAlbume();
     } else if (activeSection === 'analytics') {
       loadAnalytics();
     }
@@ -99,6 +104,21 @@ export default function AdminDashboard() {
       }
     } catch (error) {
       console.error('Failed to load blog:', error);
+    } finally {
+      setLoadingContent(false);
+    }
+  };
+
+  const loadAlbume = async () => {
+    setLoadingContent(true);
+    try {
+      const response = await fetch('/api/galerie');
+      if (response.ok) {
+        const data = await response.json();
+        setAlbume(data.albume || []);
+      }
+    } catch (error) {
+      console.error('Failed to load albume:', error);
     } finally {
       setLoadingContent(false);
     }
@@ -1539,8 +1559,181 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        {/* Galerie & Setări Placeholder */}
-        {(activeSection === 'galerie' || activeSection === 'setari') && (
+        {/* Galerie Section */}
+        {activeSection === 'galerie' && !showAlbumEditor && (
+          <div style={{
+            backgroundColor: '#fff',
+            borderRadius: '15px',
+            padding: '30px',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.08)'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px' }}>
+              <h2 style={{
+                fontSize: '20px',
+                fontWeight: 700,
+                color: '#333',
+                fontFamily: 'Montserrat, sans-serif',
+                margin: 0
+              }}>
+                Toate Albumele ({albume.length})
+              </h2>
+              <button
+                onClick={() => setShowAlbumEditor(true)}
+                style={{
+                  padding: '10px 20px',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  fontFamily: 'Montserrat, sans-serif',
+                  color: '#fff',
+                  backgroundColor: '#4caf50',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: 'pointer'
+                }}
+              >
+                + Album Nou
+              </button>
+            </div>
+
+            {loadingContent ? (
+              <p style={{ textAlign: 'center', color: '#666', fontFamily: 'Montserrat, sans-serif' }}>
+                Se încarcă...
+              </p>
+            ) : albume.length === 0 ? (
+              <p style={{ textAlign: 'center', color: '#666', fontFamily: 'Montserrat, sans-serif' }}>
+                Nu există albume. Creează primul album!
+              </p>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                {albume.map((album: any) => (
+                  <div key={album.id} style={{
+                    padding: '20px',
+                    border: '1px solid #e0e0e0',
+                    borderRadius: '10px',
+                    transition: 'all 0.3s ease',
+                    display: 'flex',
+                    gap: '20px'
+                  }}>
+                    {album.coperta && (
+                      <div style={{ flexShrink: 0 }}>
+                        <img
+                          src={album.coperta}
+                          alt={album.titlu}
+                          style={{
+                            width: '150px',
+                            height: '100px',
+                            objectFit: 'cover',
+                            borderRadius: '8px'
+                          }}
+                        />
+                      </div>
+                    )}
+                    <div style={{ flex: 1 }}>
+                      <h3 style={{
+                        fontSize: '18px',
+                        fontWeight: 700,
+                        color: '#333',
+                        fontFamily: 'Montserrat, sans-serif',
+                        marginBottom: '8px',
+                        marginTop: 0
+                      }}>
+                        {album.titlu}
+                      </h3>
+                      {album.descriere && (
+                        <p style={{
+                          fontSize: '14px',
+                          color: '#666',
+                          fontFamily: 'Montserrat, sans-serif',
+                          marginBottom: '10px'
+                        }}>
+                          {album.descriere}
+                        </p>
+                      )}
+                      <div style={{ display: 'flex', gap: '15px', fontSize: '13px', color: '#888', alignItems: 'center', flexWrap: 'wrap' }}>
+                        <span>{album.poze?.length || 0} poze</span>
+                        <span>{album.vizualizari || 0} vizualizări</span>
+                        <span>{new Date(album.created_at).toLocaleDateString('ro-RO')}</span>
+                        <span style={{
+                          padding: '2px 8px',
+                          borderRadius: '4px',
+                          backgroundColor: album.publicat ? '#e8f5e9' : '#fff3e0',
+                          color: album.publicat ? '#4caf50' : '#ff9800'
+                        }}>
+                          {album.publicat ? 'Publicat' : 'Draft'}
+                        </span>
+                        <Link
+                          href={`/galerie/${album.id}`}
+                          target="_blank"
+                          style={{
+                            marginLeft: 'auto',
+                            padding: '6px 15px',
+                            fontSize: '13px',
+                            fontWeight: 600,
+                            fontFamily: 'Montserrat, sans-serif',
+                            color: '#1e88e5',
+                            backgroundColor: '#e3f2fd',
+                            border: 'none',
+                            borderRadius: '6px',
+                            textDecoration: 'none',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          Vezi Album →
+                        </Link>
+                        <button
+                          onClick={async () => {
+                            if (confirm('Sigur vrei să ștergi acest album?')) {
+                              try {
+                                const response = await fetch(`/api/galerie/${album.id}`, {
+                                  method: 'DELETE'
+                                });
+                                if (response.ok) {
+                                  alert('Album șters cu succes!');
+                                  loadAlbume();
+                                } else {
+                                  alert('Eroare la ștergerea albumului');
+                                }
+                              } catch (error) {
+                                alert('Eroare la ștergerea albumului');
+                              }
+                            }
+                          }}
+                          style={{
+                            padding: '6px 12px',
+                            fontSize: '13px',
+                            fontWeight: 600,
+                            fontFamily: 'Montserrat, sans-serif',
+                            color: '#fff',
+                            backgroundColor: '#f44336',
+                            border: 'none',
+                            borderRadius: '6px',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          Șterge
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Album Editor */}
+        {activeSection === 'galerie' && showAlbumEditor && (
+          <AlbumEditor
+            onCancel={() => setShowAlbumEditor(false)}
+            onSave={() => {
+              setShowAlbumEditor(false);
+              loadAlbume();
+            }}
+          />
+        )}
+
+        {/* Setări Placeholder */}
+        {activeSection === 'setari' && (
           <div style={{
             backgroundColor: '#fff',
             borderRadius: '15px',

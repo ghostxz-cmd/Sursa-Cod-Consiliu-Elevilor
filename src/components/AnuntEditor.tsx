@@ -114,7 +114,7 @@ export default function AnuntEditor({ onCancel, onSave }: AnuntEditorProps) {
           fontFamily: 'Montserrat, sans-serif',
           margin: 0
         }}>
-          📢 Editor Anunț
+          Editor Anunț
         </h2>
         <div style={{ display: 'flex', gap: '12px' }}>
           <button
@@ -486,7 +486,7 @@ export default function AnuntEditor({ onCancel, onSave }: AnuntEditorProps) {
             userSelect: 'none'
           }}
         >
-          {publicat ? '✅ Anunț PUBLICAT - Vizibil pentru toată lumea' : '📝 Anunț DRAFT - Vizibil doar în dashboard'}
+          {publicat ? 'Anunț PUBLICAT - Vizibil pentru toată lumea' : 'Anunț DRAFT - Vizibil doar în dashboard'}
         </label>
       </div>
     </div>

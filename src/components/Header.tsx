@@ -22,8 +22,7 @@ export default function Header() {
         alignItems: 'center',
         justifyContent: 'space-between'
       }}>
-        {/* Logo Section */}
-        <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
           <Image
             src="/images/cropped-logo_color_simplu.png"
             alt="Consiliul Elevilor"
@@ -31,9 +30,8 @@ export default function Header() {
             height={60}
             style={{ objectFit: 'contain' }}
           />
-        </Link>
+        </div>
         
-        {/* Navigation */}
         <nav style={{
           display: 'flex',
           gap: '35px',
@@ -88,6 +86,22 @@ export default function Header() {
             Anunturi
           </Link>
           <Link 
+            href="/galerie" 
+            className="nav-link"
+            style={{
+              textDecoration: 'none',
+              color: '#555',
+              fontSize: '15px',
+              fontWeight: 700,
+              fontFamily: 'Montserrat, sans-serif',
+              transition: 'color 0.3s ease'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.color = '#1e88e5'}
+            onMouseLeave={(e) => e.currentTarget.style.color = '#555'}
+          >
+            Galerie
+          </Link>
+          <Link 
             href="/blog" 
             className="nav-link"
             style={{
@@ -105,30 +119,43 @@ export default function Header() {
           </Link>
           <Link 
             href="/contact" 
+            className="nav-link"
             style={{
               textDecoration: 'none',
-              padding: '12px 28px',
-              backgroundColor: '#1e88e5',
-              color: '#fff',
-              fontSize: '14px',
+              color: '#555',
+              fontSize: '15px',
               fontWeight: 700,
               fontFamily: 'Montserrat, sans-serif',
-              borderRadius: '25px',
-              transition: 'all 0.3s ease',
-              boxShadow: '0 4px 15px rgba(30, 136, 229, 0.3)'
+              transition: 'color 0.3s ease'
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = '#1976d2';
-              e.currentTarget.style.transform = 'translateY(-2px)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = '#1e88e5';
-              e.currentTarget.style.transform = 'translateY(0)';
-            }}
+            onMouseEnter={(e) => e.currentTarget.style.color = '#1e88e5'}
+            onMouseLeave={(e) => e.currentTarget.style.color = '#555'}
           >
             Contact
           </Link>
         </nav>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <div style={{
+            width: '70px',
+            height: '70px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            border: '2px solid #ddd',
+            borderRadius: '8px',
+            backgroundColor: 'white'
+          }}>
+            <Image
+              src="/images/logo.png"
+              alt="Logo"
+              width={65}
+              height={65}
+              style={{ objectFit: 'contain', display: 'block' }}
+              priority
+            />
+          </div>
+        </div>
       </div>
     </header>
   );

@@ -174,16 +174,16 @@ export default function AnuntPage() {
                 fontFamily: 'Montserrat, sans-serif'
               }}>
                 <span>
-                  📅 Publicat: {new Date(anunt.created_at).toLocaleDateString('ro-RO', {
+                  Publicat: {new Date(anunt.created_at).toLocaleDateString('ro-RO', {
                     day: 'numeric',
                     month: 'long',
                     year: 'numeric'
                   })}
                 </span>
-                <span>👁️ {anunt.vizualizari} vizualizări</span>
+                <span>{anunt.vizualizari} vizualizări</span>
                 {anunt.updated_at !== anunt.created_at && (
                   <span>
-                    🔄 Actualizat: {new Date(anunt.updated_at).toLocaleDateString('ro-RO', {
+                    Actualizat: {new Date(anunt.updated_at).toLocaleDateString('ro-RO', {
                       day: 'numeric',
                       month: 'long',
                       year: 'numeric'

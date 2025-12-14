@@ -40,3 +40,36 @@ export async function GET(
     );
   }
 }
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    // Verificăm autentificarea
+    const sessionToken = request.cookies.get('admin_session')?.value;
+    if (!sessionToken) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const { id } = await params;
+
+    const { error } = await supabase
+      .from('anunturi')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      console.error('Delete anunt error:', error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Delete anunt error:', error);
+    return NextResponse.json(
+      { error: 'Failed to delete anunt' },
+      { status: 500 }
+    );
+  }
+}

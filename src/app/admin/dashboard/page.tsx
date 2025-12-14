@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import BlogEditor from '@/components/BlogEditor';
+import AnuntEditor from '@/components/AnuntEditor';
 
 interface DashboardStats {
   totalAnunturi: number;
@@ -27,6 +28,7 @@ export default function AdminDashboard() {
   const [blogArticles, setBlogArticles] = useState<any[]>([]);
   const [loadingContent, setLoadingContent] = useState(false);
   const [showBlogEditor, setShowBlogEditor] = useState(false);
+  const [showAnuntEditor, setShowAnuntEditor] = useState(false);
   const [analyticsData, setAnalyticsData] = useState<any>(null);
 
   useEffect(() => {
@@ -1035,82 +1037,6 @@ export default function AdminDashboard() {
         )}
 
 
-        {/* Anunțuri Section */}
-        {activeSection === 'anunturi' && (
-          <div style={{
-            backgroundColor: '#fff',
-            borderRadius: '15px',
-            padding: '30px',
-            boxShadow: '0 4px 15px rgba(0,0,0,0.08)'
-          }}>
-            {loadingContent ? (
-              <p style={{ textAlign: 'center', color: '#666', fontFamily: 'Montserrat, sans-serif' }}>
-                Se încarcă...
-              </p>
-            ) : anunturi.length === 0 ? (
-              <p style={{ textAlign: 'center', color: '#666', fontFamily: 'Montserrat, sans-serif' }}>
-                Nu există anunțuri.
-              </p>
-            ) : (
-              <div>
-                <h2 style={{
-                  fontSize: '20px',
-                  fontWeight: 700,
-                  color: '#333',
-                  fontFamily: 'Montserrat, sans-serif',
-                  marginBottom: '20px',
-                  marginTop: 0
-                }}>
-                  Toate Anunțurile ({anunturi.length})
-                </h2>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                  {anunturi.map((anunt: any) => (
-                    <div key={anunt.id} style={{
-                      padding: '20px',
-                      border: '1px solid #e0e0e0',
-                      borderRadius: '10px',
-                      transition: 'all 0.3s ease'
-                    }}>
-                      <h3 style={{
-                        fontSize: '18px',
-                        fontWeight: 700,
-                        color: '#333',
-                        fontFamily: 'Montserrat, sans-serif',
-                        marginBottom: '8px',
-                        marginTop: 0
-                      }}>
-                        {anunt.titlu}
-                      </h3>
-                      {anunt.rezumat && (
-                        <p style={{
-                          fontSize: '14px',
-                          color: '#666',
-                          fontFamily: 'Montserrat, sans-serif',
-                          marginBottom: '10px'
-                        }}>
-                          {anunt.rezumat}
-                        </p>
-                      )}
-                      <div style={{ display: 'flex', gap: '15px', fontSize: '13px', color: '#888' }}>
-                        <span>📊 {anunt.vizualizari || 0} vizualizări</span>
-                        <span>📅 {new Date(anunt.created_at).toLocaleDateString('ro-RO')}</span>
-                        <span style={{
-                          padding: '2px 8px',
-                          borderRadius: '4px',
-                          backgroundColor: anunt.publicat ? '#e8f5e9' : '#fff3e0',
-                          color: anunt.publicat ? '#4caf50' : '#ff9800'
-                        }}>
-                          {anunt.publicat ? 'Publicat' : 'Draft'}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-
         {/* Blog Section */}
         {activeSection === 'blog' && !showBlogEditor && (
           <div style={{
@@ -1252,13 +1178,41 @@ export default function AdminDashboard() {
         )}
 
         {/* Anunțuri Section */}
-        {activeSection === 'anunturi' && (
+        {activeSection === 'anunturi' && !showAnuntEditor && (
           <div style={{
             backgroundColor: '#fff',
             borderRadius: '15px',
             padding: '30px',
             boxShadow: '0 4px 15px rgba(0,0,0,0.08)'
           }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px' }}>
+              <h2 style={{
+                fontSize: '20px',
+                fontWeight: 700,
+                color: '#333',
+                fontFamily: 'Montserrat, sans-serif',
+                margin: 0
+              }}>
+                Toate Anunțurile ({anunturi.length})
+              </h2>
+              <button
+                onClick={() => setShowAnuntEditor(true)}
+                style={{
+                  padding: '10px 20px',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  fontFamily: 'Montserrat, sans-serif',
+                  color: '#fff',
+                  backgroundColor: '#4caf50',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: 'pointer'
+                }}
+              >
+                + Anunț Nou
+              </button>
+            </div>
+
             {loadingContent ? (
               <p style={{ textAlign: 'center', color: '#666', fontFamily: 'Montserrat, sans-serif' }}>
                 Se încarcă...
@@ -1268,25 +1222,31 @@ export default function AdminDashboard() {
                 Nu există anunțuri. Adaugă primul anunț!
               </p>
             ) : (
-              <div>
-                <h2 style={{
-                  fontSize: '20px',
-                  fontWeight: 700,
-                  color: '#333',
-                  fontFamily: 'Montserrat, sans-serif',
-                  marginBottom: '20px',
-                  marginTop: 0
-                }}>
-                  Toate Anunțurile ({anunturi.length})
-                </h2>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                  {anunturi.map((anunt: any) => (
-                    <div key={anunt.id} style={{
-                      padding: '20px',
-                      border: '1px solid #e0e0e0',
-                      borderRadius: '10px',
-                      transition: 'all 0.3s ease'
-                    }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                {anunturi.map((anunt: any) => (
+                  <div key={anunt.id} style={{
+                    padding: '20px',
+                    border: '1px solid #e0e0e0',
+                    borderRadius: '10px',
+                    transition: 'all 0.3s ease',
+                    display: 'flex',
+                    gap: '20px'
+                  }}>
+                    {anunt.imagine_principala && (
+                      <div style={{ flexShrink: 0 }}>
+                        <img
+                          src={anunt.imagine_principala}
+                          alt={anunt.titlu}
+                          style={{
+                            width: '150px',
+                            height: '100px',
+                            objectFit: 'cover',
+                            borderRadius: '8px'
+                          }}
+                        />
+                      </div>
+                    )}
+                    <div style={{ flex: 1 }}>
                       <h3 style={{
                         fontSize: '18px',
                         fontWeight: 700,
@@ -1307,7 +1267,7 @@ export default function AdminDashboard() {
                           {anunt.rezumat}
                         </p>
                       )}
-                      <div style={{ display: 'flex', gap: '15px', fontSize: '13px', color: '#888' }}>
+                      <div style={{ display: 'flex', gap: '15px', fontSize: '13px', color: '#888', alignItems: 'center' }}>
                         <span>📊 {anunt.vizualizari || 0} vizualizări</span>
                         <span>📅 {new Date(anunt.created_at).toLocaleDateString('ro-RO')}</span>
                         <span style={{
@@ -1318,13 +1278,72 @@ export default function AdminDashboard() {
                         }}>
                           {anunt.publicat ? 'Publicat' : 'Draft'}
                         </span>
+                        <Link
+                          href={`/anunturi/${anunt.id}`}
+                          target="_blank"
+                          style={{
+                            marginLeft: 'auto',
+                            padding: '6px 15px',
+                            fontSize: '13px',
+                            fontWeight: 600,
+                            fontFamily: 'Montserrat, sans-serif',
+                            color: '#1e88e5',
+                            backgroundColor: '#e3f2fd',
+                            border: 'none',
+                            borderRadius: '6px',
+                            textDecoration: 'none',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          Vezi Anunț →
+                        </Link>
+                        <button
+                          onClick={async () => {
+                            if (confirm('Ești sigur că vrei să ștergi acest anunț?')) {
+                              try {
+                                const response = await fetch(`/api/anunturi/${anunt.id}`, {
+                                  method: 'DELETE'
+                                });
+                                if (response.ok) {
+                                  loadAnunturi();
+                                }
+                              } catch (error) {
+                                console.error('Failed to delete anunt:', error);
+                              }
+                            }
+                          }}
+                          style={{
+                            padding: '6px 15px',
+                            fontSize: '13px',
+                            fontWeight: 600,
+                            fontFamily: 'Montserrat, sans-serif',
+                            color: '#f44336',
+                            backgroundColor: '#ffebee',
+                            border: 'none',
+                            borderRadius: '6px',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          🗑️ Șterge
+                        </button>
                       </div>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             )}
           </div>
+        )}
+
+        {/* Anunț Editor */}
+        {activeSection === 'anunturi' && showAnuntEditor && (
+          <AnuntEditor
+            onCancel={() => setShowAnuntEditor(false)}
+            onSave={() => {
+              setShowAnuntEditor(false);
+              loadAnunturi();
+            }}
+          />
         )}
 
         {/* Blog Section */}

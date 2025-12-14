@@ -1,0 +1,219 @@
+/* Homepage Responsive Styles */
+
+/* Hero Section */
+@media (max-width: 768px) {
+  /* Hero Section */
+  section[style*="background: linear-gradient"] {
+    padding: 60px 20px !important;
+    min-height: 70vh !important;
+  }
+
+  /* Hero Title */
+  section h1 {
+    font-size: 32px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 20px !important;
+  }
+
+  /* Hero Subtitle */
+  section p {
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+    margin-bottom: 25px !important;
+  }
+
+  /* Hero Buttons Container */
+  section > div > div:last-child {
+    flex-direction: column !important;
+    gap: 15px !important;
+    width: 100% !important;
+  }
+
+  /* Hero Buttons */
+  section a[style*="padding"] {
+    width: 100% !important;
+    text-align: center !important;
+    padding: 15px 20px !important;
+    font-size: 15px !important;
+  }
+
+  /* Stats Section */
+  section[style*="backgroundColor: '#f8f9fa'"] {
+    padding: 40px 20px !important;
+  }
+
+  /* Stats Grid */
+  div[style*="gridTemplateColumns: 'repeat(4"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
+  }
+
+  /* Stat Cards */
+  div[style*="backgroundColor: '#fff'"][style*="borderRadius: '15px'"] {
+    padding: 20px !important;
+  }
+
+  /* Stat Numbers */
+  div[style*="fontSize: '48px'"] {
+    font-size: 32px !important;
+  }
+
+  /* Stat Labels */
+  div[style*="fontSize: '16px'"][style*="color: '#666'"] {
+    font-size: 14px !important;
+  }
+
+  /* About Section */
+  section[style*="padding: '100px 50px'"] {
+    padding: 50px 20px !important;
+  }
+
+  /* Section Titles */
+  h2[style*="fontSize: '48px'"] {
+    font-size: 28px !important;
+    line-height: 1.3 !important;
+    margin-bottom: 20px !important;
+  }
+
+  /* Section Subtitles */
+  p[style*="fontSize: '18px'"] {
+    font-size: 15px !important;
+    line-height: 1.6 !important;
+  }
+
+  /* About Content Grid */
+  div[style*="display: 'grid'"][style*="gridTemplateColumns: '1fr 1fr'"] {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+  }
+
+  /* Feature Cards */
+  div[style*="backgroundColor: '#f8f9fa'"][style*="padding: '30px'"] {
+    padding: 20px !important;
+  }
+
+  /* Feature Titles */
+  h3[style*="fontSize: '24px'"] {
+    font-size: 20px !important;
+  }
+
+  /* Feature Text */
+  h3 + p {
+    font-size: 14px !important;
+  }
+
+  /* CTA Section */
+  section[style*="background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%)"] {
+    padding: 50px 20px !important;
+  }
+
+  /* CTA Title */
+  section[style*="background: linear-gradient(135deg"] h2 {
+    font-size: 28px !important;
+    margin-bottom: 15px !important;
+  }
+
+  /* CTA Text */
+  section[style*="background: linear-gradient(135deg"] p {
+    font-size: 15px !important;
+    margin-bottom: 25px !important;
+  }
+
+  /* CTA Buttons */
+  section[style*="background: linear-gradient(135deg"] div[style*="gap: '20px'"] {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 15px !important;
+  }
+
+  section[style*="background: linear-gradient(135deg"] a {
+    width: 100% !important;
+    text-align: center !important;
+    padding: 15px 25px !important;
+  }
+
+  /* FAQ Section */
+  .faq-section {
+    padding: 50px 20px !important;
+  }
+
+  /* FAQ Items */
+  .faq-item button {
+    padding: 15px 0 !important;
+  }
+
+  .faq-question {
+    font-size: 16px !important;
+    line-height: 1.4 !important;
+  }
+
+  .faq-answer {
+    font-size: 14px !important;
+    padding: 15px 0 !important;
+  }
+
+  /* Image Containers */
+  div[style*="width: '600px'"],
+  div[style*="width: '500px'"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Images */
+  img {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100% !important;
+  }
+
+  /* Flex Containers with Images */
+  div[style*="display: 'flex'"][style*="gap: '60px'"] {
+    flex-direction: column !important;
+    gap: 30px !important;
+  }
+
+  /* Text Containers */
+  div[style*="flex: 1"] {
+    width: 100% !important;
+  }
+
+  /* Remove excessive padding */
+  section[style*="padding: '100px"] {
+    padding: 50px 20px !important;
+  }
+
+  section[style*="padding: '80px"] {
+    padding: 40px 20px !important;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+  section[style*="padding: '100px"] {
+    padding: 60px 30px !important;
+  }
+
+  h2[style*="fontSize: '48px'"] {
+    font-size: 36px !important;
+  }
+
+  div[style*="gridTemplateColumns: 'repeat(4"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  div[style*="display: 'grid'"][style*="gridTemplateColumns: '1fr 1fr'"] {
+    gap: 40px !important;
+  }
+}
+
+/* Fix overflow issues */
+body, html {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
+
+section, div {
+  max-width: 100%;
+  overflow-x: hidden;
+}

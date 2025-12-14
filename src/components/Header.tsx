@@ -235,7 +235,7 @@ export default function Header() {
           padding: '20px',
           display: 'none',
           flexDirection: 'column',
-          gap: '15px',
+          gap: '0',
           zIndex: 999,
           maxHeight: 'calc(100vh - 70px)',
           overflowY: 'auto',
@@ -243,6 +243,44 @@ export default function Header() {
           transition: 'transform 0.3s ease'
         }}
       >
+        {/* Logo Section in Mobile Menu */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '15px',
+          padding: '20px 0',
+          borderBottom: '2px solid #e0e0e0',
+          marginBottom: '15px'
+        }}>
+          <div style={{
+            width: '50px',
+            height: '50px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            border: '2px solid #ddd',
+            borderRadius: '8px',
+            backgroundColor: 'white'
+          }}>
+            <Image
+              src="/images/logo.png"
+              alt="Logo Școală"
+              width={45}
+              height={45}
+              style={{ objectFit: 'contain' }}
+            />
+          </div>
+          <Image
+            src="/images/cropped-logo_color_simplu.png"
+            alt="Consiliul Elevilor"
+            width={120}
+            height={40}
+            style={{ objectFit: 'contain' }}
+          />
+        </div>
+
+        {/* Menu Items */}
         <Link 
           href="/" 
           onClick={() => setMobileMenuOpen(false)}
@@ -252,13 +290,12 @@ export default function Header() {
             fontSize: '16px',
             fontWeight: 600,
             fontFamily: 'Montserrat, sans-serif',
-            padding: '12px 15px',
-            borderRadius: '8px',
-            backgroundColor: '#f8f9fa',
+            padding: '15px',
+            borderBottom: '1px solid #f0f0f0',
             transition: 'background-color 0.3s ease'
           }}
         >
-          🏠 Acasă
+          Acasă
         </Link>
         <Link 
           href="/despre-noi"
@@ -269,13 +306,12 @@ export default function Header() {
             fontSize: '16px',
             fontWeight: 600,
             fontFamily: 'Montserrat, sans-serif',
-            padding: '12px 15px',
-            borderRadius: '8px',
-            backgroundColor: '#f8f9fa',
+            padding: '15px',
+            borderBottom: '1px solid #f0f0f0',
             transition: 'background-color 0.3s ease'
           }}
         >
-          ℹ️ Despre noi
+          Despre noi
         </Link>
         <Link 
           href="/anunturi"
@@ -286,13 +322,12 @@ export default function Header() {
             fontSize: '16px',
             fontWeight: 600,
             fontFamily: 'Montserrat, sans-serif',
-            padding: '12px 15px',
-            borderRadius: '8px',
-            backgroundColor: '#f8f9fa',
+            padding: '15px',
+            borderBottom: '1px solid #f0f0f0',
             transition: 'background-color 0.3s ease'
           }}
         >
-          📢 Anunturi
+          Anunturi
         </Link>
         <Link 
           href="/galerie"
@@ -303,13 +338,12 @@ export default function Header() {
             fontSize: '16px',
             fontWeight: 600,
             fontFamily: 'Montserrat, sans-serif',
-            padding: '12px 15px',
-            borderRadius: '8px',
-            backgroundColor: '#f8f9fa',
+            padding: '15px',
+            borderBottom: '1px solid #f0f0f0',
             transition: 'background-color 0.3s ease'
           }}
         >
-          📸 Galerie
+          Galerie
         </Link>
         <Link 
           href="/parteneri"
@@ -320,13 +354,12 @@ export default function Header() {
             fontSize: '16px',
             fontWeight: 600,
             fontFamily: 'Montserrat, sans-serif',
-            padding: '12px 15px',
-            borderRadius: '8px',
-            backgroundColor: '#f8f9fa',
+            padding: '15px',
+            borderBottom: '1px solid #f0f0f0',
             transition: 'background-color 0.3s ease'
           }}
         >
-          🤝 Partenerii Noștri
+          Partenerii Noștri
         </Link>
         <Link 
           href="/contact"
@@ -337,13 +370,11 @@ export default function Header() {
             fontSize: '16px',
             fontWeight: 600,
             fontFamily: 'Montserrat, sans-serif',
-            padding: '12px 15px',
-            borderRadius: '8px',
-            backgroundColor: '#f8f9fa',
+            padding: '15px',
             transition: 'background-color 0.3s ease'
           }}
         >
-          📧 Contact
+          Contact
         </Link>
       </nav>
 

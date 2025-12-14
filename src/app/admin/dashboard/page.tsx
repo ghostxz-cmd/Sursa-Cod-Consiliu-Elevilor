@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
+import BlogEditor from '@/components/BlogEditor';
 
 interface DashboardStats {
   totalAnunturi: number;
@@ -22,12 +23,27 @@ export default function AdminDashboard() {
   });
   const [loading, setLoading] = useState(true);
   const [activeSection, setActiveSection] = useState('dashboard');
+  const [anunturi, setAnunturi] = useState<any[]>([]);
+  const [blogArticles, setBlogArticles] = useState<any[]>([]);
+  const [loadingContent, setLoadingContent] = useState(false);
+  const [showBlogEditor, setShowBlogEditor] = useState(false);
+  const [analyticsData, setAnalyticsData] = useState<any>(null);
 
   useEffect(() => {
     // Verificăm autentificarea
     checkAuth();
     loadStats();
   }, []);
+
+  useEffect(() => {
+    if (activeSection === 'anunturi') {
+      loadAnunturi();
+    } else if (activeSection === 'blog') {
+      loadBlog();
+    } else if (activeSection === 'analytics') {
+      loadAnalytics();
+    }
+  }, [activeSection]);
 
   const checkAuth = async () => {
     try {
@@ -43,14 +59,62 @@ export default function AdminDashboard() {
   };
 
   const loadStats = async () => {
-    // TODO: Load real stats from API
-    setStats({
-      totalAnunturi: 12,
-      totalBlog: 5,
-      totalVizualizari: 1247,
-      adminUsers: 3
-    });
-    setLoading(false);
+    try {
+      const response = await fetch('/api/dashboard/stats');
+      if (response.ok) {
+        const data = await response.json();
+        setStats(data);
+      }
+    } catch (error) {
+      console.error('Failed to load stats:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadAnunturi = async () => {
+    setLoadingContent(true);
+    try {
+      const response = await fetch('/api/anunturi');
+      if (response.ok) {
+        const data = await response.json();
+        setAnunturi(data.anunturi || []);
+      }
+    } catch (error) {
+      console.error('Failed to load anunturi:', error);
+    } finally {
+      setLoadingContent(false);
+    }
+  };
+
+  const loadBlog = async () => {
+    setLoadingContent(true);
+    try {
+      const response = await fetch('/api/blog');
+      if (response.ok) {
+        const data = await response.json();
+        setBlogArticles(data.articles || []);
+      }
+    } catch (error) {
+      console.error('Failed to load blog:', error);
+    } finally {
+      setLoadingContent(false);
+    }
+  };
+
+  const loadAnalytics = async () => {
+    setLoadingContent(true);
+    try {
+      const response = await fetch('/api/analytics');
+      if (response.ok) {
+        const data = await response.json();
+        setAnalyticsData(data);
+      }
+    } catch (error) {
+      console.error('Failed to load analytics:', error);
+    } finally {
+      setLoadingContent(false);
+    }
   };
 
   const handleLogout = async () => {
@@ -105,6 +169,27 @@ export default function AdminDashboard() {
             }}
           >
             Dashboard
+          </button>
+
+          <button
+            onClick={() => setActiveSection('analytics')}
+            style={{
+              width: '100%',
+              padding: '12px 16px',
+              marginBottom: '8px',
+              textAlign: 'left',
+              fontSize: '15px',
+              fontWeight: 600,
+              fontFamily: 'Montserrat, sans-serif',
+              color: activeSection === 'analytics' ? '#1e88e5' : '#555',
+              backgroundColor: activeSection === 'analytics' ? '#e3f2fd' : 'transparent',
+              border: 'none',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease'
+            }}
+          >
+            Analytics & Performanță
           </button>
 
           <button
@@ -233,6 +318,7 @@ export default function AdminDashboard() {
               marginTop: 0
             }}>
               {activeSection === 'dashboard' && 'Dashboard'}
+              {activeSection === 'analytics' && 'Analytics & Performanță'}
               {activeSection === 'anunturi' && 'Gestionare Anunțuri'}
               {activeSection === 'blog' && 'Gestionare Blog'}
               {activeSection === 'galerie' && 'Gestionare Galerie'}
@@ -465,8 +551,977 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        {/* Other Sections Placeholder */}
-        {activeSection !== 'dashboard' && (
+        {/* Analytics Section */}
+        {activeSection === 'analytics' && (
+          <div>
+            {loadingContent ? (
+              <p style={{ textAlign: 'center', color: '#666', fontFamily: 'Montserrat, sans-serif' }}>
+                Se încarcă datele...
+              </p>
+            ) : analyticsData ? (
+              <div>
+                {/* Performance Metrics */}
+                <div style={{
+                  backgroundColor: '#fff',
+                  borderRadius: '12px',
+                  padding: '25px',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                  marginBottom: '20px'
+                }}>
+                  <h3 style={{
+                    fontSize: '16px',
+                    fontWeight: 700,
+                    color: '#333',
+                    fontFamily: 'Montserrat, sans-serif',
+                    marginBottom: '20px',
+                    marginTop: 0,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px'
+                  }}>Performanță Server</h3>
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+                    gap: '15px'
+                  }}>
+                    <div style={{
+                      padding: '20px',
+                      backgroundColor: '#f8f9fa',
+                      borderRadius: '8px',
+                      borderLeft: '3px solid #4caf50'
+                    }}>
+                      <div style={{
+                        fontSize: '13px',
+                        color: '#666',
+                        fontFamily: 'Montserrat, sans-serif',
+                        marginBottom: '8px',
+                        fontWeight: 600
+                      }}>API Response Time</div>
+                      <div style={{
+                        fontSize: '28px',
+                        fontWeight: 700,
+                        color: '#333',
+                        fontFamily: 'Montserrat, sans-serif'
+                      }}>{analyticsData.performance.apiResponseTime}</div>
+                    </div>
+
+                    <div style={{
+                      padding: '20px',
+                      backgroundColor: '#f8f9fa',
+                      borderRadius: '8px',
+                      borderLeft: '3px solid #2196f3'
+                    }}>
+                      <div style={{
+                        fontSize: '13px',
+                        color: '#666',
+                        fontFamily: 'Montserrat, sans-serif',
+                        marginBottom: '8px',
+                        fontWeight: 600
+                      }}>Database Response</div>
+                      <div style={{
+                        fontSize: '28px',
+                        fontWeight: 700,
+                        color: '#333',
+                        fontFamily: 'Montserrat, sans-serif'
+                      }}>{analyticsData.performance.databaseResponseTime}</div>
+                    </div>
+
+                    <div style={{
+                      padding: '20px',
+                      backgroundColor: '#f8f9fa',
+                      borderRadius: '8px',
+                      borderLeft: '3px solid #ff9800'
+                    }}>
+                      <div style={{
+                        fontSize: '13px',
+                        color: '#666',
+                        fontFamily: 'Montserrat, sans-serif',
+                        marginBottom: '8px',
+                        fontWeight: 600
+                      }}>Status</div>
+                      <div style={{
+                        fontSize: '28px',
+                        fontWeight: 700,
+                        color: '#333',
+                        fontFamily: 'Montserrat, sans-serif'
+                      }}>{analyticsData.performance.status}</div>
+                    </div>
+
+                    <div style={{
+                      padding: '20px',
+                      backgroundColor: '#f8f9fa',
+                      borderRadius: '8px',
+                      borderLeft: '3px solid #9c27b0'
+                    }}>
+                      <div style={{
+                        fontSize: '13px',
+                        color: '#666',
+                        fontFamily: 'Montserrat, sans-serif',
+                        marginBottom: '8px',
+                        fontWeight: 600
+                      }}>DB Health</div>
+                      <div style={{
+                        fontSize: '28px',
+                        fontWeight: 700,
+                        color: analyticsData.performance.databaseHealthy ? '#4caf50' : '#f44336',
+                        fontFamily: 'Montserrat, sans-serif'
+                      }}>{analyticsData.performance.databaseHealthy ? 'OK' : 'Error'}</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* System Resources */}
+                <div style={{
+                  backgroundColor: '#fff',
+                  borderRadius: '12px',
+                  padding: '25px',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                  marginBottom: '20px'
+                }}>
+                  <h3 style={{
+                    fontSize: '16px',
+                    fontWeight: 700,
+                    color: '#333',
+                    fontFamily: 'Montserrat, sans-serif',
+                    marginBottom: '20px',
+                    marginTop: 0,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px'
+                  }}>Resurse Sistem</h3>
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                    gap: '15px'
+                  }}>
+                    <div style={{
+                      padding: '15px',
+                      backgroundColor: '#f8f9fa',
+                      borderRadius: '8px'
+                    }}>
+                      <div style={{
+                        fontSize: '12px',
+                        color: '#666',
+                        fontFamily: 'Montserrat, sans-serif',
+                        marginBottom: '5px'
+                      }}>Memory (RSS)</div>
+                      <div style={{
+                        fontSize: '20px',
+                        fontWeight: 700,
+                        color: '#333',
+                        fontFamily: 'Montserrat, sans-serif'
+                      }}>{analyticsData.system.memoryUsage.rss}</div>
+                    </div>
+
+                    <div style={{
+                      padding: '15px',
+                      backgroundColor: '#f8f9fa',
+                      borderRadius: '8px'
+                    }}>
+                      <div style={{
+                        fontSize: '12px',
+                        color: '#666',
+                        fontFamily: 'Montserrat, sans-serif',
+                        marginBottom: '5px'
+                      }}>Heap Used</div>
+                      <div style={{
+                        fontSize: '20px',
+                        fontWeight: 700,
+                        color: '#333',
+                        fontFamily: 'Montserrat, sans-serif'
+                      }}>{analyticsData.system.memoryUsage.heapUsed}</div>
+                    </div>
+
+                    <div style={{
+                      padding: '15px',
+                      backgroundColor: '#f8f9fa',
+                      borderRadius: '8px'
+                    }}>
+                      <div style={{
+                        fontSize: '12px',
+                        color: '#666',
+                        fontFamily: 'Montserrat, sans-serif',
+                        marginBottom: '5px'
+                      }}>Heap Total</div>
+                      <div style={{
+                        fontSize: '20px',
+                        fontWeight: 700,
+                        color: '#333',
+                        fontFamily: 'Montserrat, sans-serif'
+                      }}>{analyticsData.system.memoryUsage.heapTotal}</div>
+                    </div>
+
+                    <div style={{
+                      padding: '15px',
+                      backgroundColor: '#f8f9fa',
+                      borderRadius: '8px'
+                    }}>
+                      <div style={{
+                        fontSize: '12px',
+                        color: '#666',
+                        fontFamily: 'Montserrat, sans-serif',
+                        marginBottom: '5px'
+                      }}>Uptime</div>
+                      <div style={{
+                        fontSize: '20px',
+                        fontWeight: 700,
+                        color: '#333',
+                        fontFamily: 'Montserrat, sans-serif'
+                      }}>{analyticsData.system.uptime}</div>
+                    </div>
+
+                    <div style={{
+                      padding: '15px',
+                      backgroundColor: '#f8f9fa',
+                      borderRadius: '8px'
+                    }}>
+                      <div style={{
+                        fontSize: '12px',
+                        color: '#666',
+                        fontFamily: 'Montserrat, sans-serif',
+                        marginBottom: '5px'
+                      }}>Node Version</div>
+                      <div style={{
+                        fontSize: '20px',
+                        fontWeight: 700,
+                        color: '#333',
+                        fontFamily: 'Montserrat, sans-serif'
+                      }}>{analyticsData.system.nodeVersion}</div>
+                    </div>
+
+                    <div style={{
+                      padding: '15px',
+                      backgroundColor: '#f8f9fa',
+                      borderRadius: '8px'
+                    }}>
+                      <div style={{
+                        fontSize: '12px',
+                        color: '#666',
+                        fontFamily: 'Montserrat, sans-serif',
+                        marginBottom: '5px'
+                      }}>Platform</div>
+                      <div style={{
+                        fontSize: '20px',
+                        fontWeight: 700,
+                        color: '#333',
+                        fontFamily: 'Montserrat, sans-serif'
+                      }}>{analyticsData.system.platform}</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Database Stats */}
+                <div style={{
+                  backgroundColor: '#fff',
+                  borderRadius: '12px',
+                  padding: '25px',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                  marginBottom: '20px'
+                }}>
+                  <h3 style={{
+                    fontSize: '16px',
+                    fontWeight: 700,
+                    color: '#333',
+                    fontFamily: 'Montserrat, sans-serif',
+                    marginBottom: '20px',
+                    marginTop: 0,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px'
+                  }}>Database Metrics</h3>
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+                    gap: '15px'
+                  }}>
+                    <div style={{
+                      padding: '20px',
+                      backgroundColor: '#f8f9fa',
+                      borderRadius: '8px'
+                    }}>
+                      <div style={{
+                        fontSize: '13px',
+                        color: '#666',
+                        fontFamily: 'Montserrat, sans-serif',
+                        marginBottom: '8px',
+                        fontWeight: 600
+                      }}>Total Articles</div>
+                      <div style={{
+                        fontSize: '32px',
+                        fontWeight: 700,
+                        color: '#2196f3',
+                        fontFamily: 'Montserrat, sans-serif'
+                      }}>{analyticsData.database.totalArticles}</div>
+                    </div>
+
+                    <div style={{
+                      padding: '20px',
+                      backgroundColor: '#f8f9fa',
+                      borderRadius: '8px'
+                    }}>
+                      <div style={{
+                        fontSize: '13px',
+                        color: '#666',
+                        fontFamily: 'Montserrat, sans-serif',
+                        marginBottom: '8px',
+                        fontWeight: 600
+                      }}>Total Anunturi</div>
+                      <div style={{
+                        fontSize: '32px',
+                        fontWeight: 700,
+                        color: '#9c27b0',
+                        fontFamily: 'Montserrat, sans-serif'
+                      }}>{analyticsData.database.totalAnunturi}</div>
+                    </div>
+
+                    <div style={{
+                      padding: '20px',
+                      backgroundColor: '#f8f9fa',
+                      borderRadius: '8px'
+                    }}>
+                      <div style={{
+                        fontSize: '13px',
+                        color: '#666',
+                        fontFamily: 'Montserrat, sans-serif',
+                        marginBottom: '8px',
+                        fontWeight: 600
+                      }}>Total Views</div>
+                      <div style={{
+                        fontSize: '32px',
+                        fontWeight: 700,
+                        color: '#ff9800',
+                        fontFamily: 'Montserrat, sans-serif'
+                      }}>{analyticsData.database.totalViews}</div>
+                    </div>
+
+                    <div style={{
+                      padding: '20px',
+                      backgroundColor: '#f8f9fa',
+                      borderRadius: '8px'
+                    }}>
+                      <div style={{
+                        fontSize: '13px',
+                        color: '#666',
+                        fontFamily: 'Montserrat, sans-serif',
+                        marginBottom: '8px',
+                        fontWeight: 600
+                      }}>DB Size</div>
+                      <div style={{
+                        fontSize: '32px',
+                        fontWeight: 700,
+                        color: '#4caf50',
+                        fontFamily: 'Montserrat, sans-serif'
+                      }}>{analyticsData.database.estimatedSize}</div>
+                    </div>
+
+                    <div style={{
+                      padding: '20px',
+                      backgroundColor: '#f8f9fa',
+                      borderRadius: '8px'
+                    }}>
+                      <div style={{
+                        fontSize: '13px',
+                        color: '#666',
+                        fontFamily: 'Montserrat, sans-serif',
+                        marginBottom: '8px',
+                        fontWeight: 600
+                      }}>DB Response</div>
+                      <div style={{
+                        fontSize: '32px',
+                        fontWeight: 700,
+                        color: '#00bcd4',
+                        fontFamily: 'Montserrat, sans-serif'
+                      }}>{analyticsData.database.responseTime}</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Environment Info */}
+                <div style={{
+                  backgroundColor: '#fff',
+                  borderRadius: '12px',
+                  padding: '25px',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
+                }}>
+                  <h3 style={{
+                    fontSize: '16px',
+                    fontWeight: 700,
+                    color: '#333',
+                    fontFamily: 'Montserrat, sans-serif',
+                    marginBottom: '20px',
+                    marginTop: 0,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px'
+                  }}>Environment Info</h3>
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                    gap: '15px'
+                  }}>
+                    <div style={{
+                      padding: '15px',
+                      backgroundColor: '#f8f9fa',
+                      borderRadius: '8px',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center'
+                    }}>
+                      <span style={{
+                        fontSize: '14px',
+                        color: '#666',
+                        fontFamily: 'Montserrat, sans-serif',
+                        fontWeight: 600
+                      }}>Node Environment</span>
+                      <span style={{
+                        fontSize: '14px',
+                        fontWeight: 700,
+                        color: '#333',
+                        fontFamily: 'Montserrat, sans-serif',
+                        padding: '4px 12px',
+                        backgroundColor: '#e3f2fd',
+                        borderRadius: '15px'
+                      }}>{analyticsData.environment.nodeEnv}</span>
+                    </div>
+
+                    <div style={{
+                      padding: '15px',
+                      backgroundColor: '#f8f9fa',
+                      borderRadius: '8px',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center'
+                    }}>
+                      <span style={{
+                        fontSize: '14px',
+                        color: '#666',
+                        fontFamily: 'Montserrat, sans-serif',
+                        fontWeight: 600
+                      }}>Timezone</span>
+                      <span style={{
+                        fontSize: '14px',
+                        fontWeight: 700,
+                        color: '#333',
+                        fontFamily: 'Montserrat, sans-serif'
+                      }}>{analyticsData.environment.timezone}</span>
+                    </div>
+
+                    <div style={{
+                      padding: '15px',
+                      backgroundColor: '#f8f9fa',
+                      borderRadius: '8px',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center'
+                    }}>
+                      <span style={{
+                        fontSize: '14px',
+                        color: '#666',
+                        fontFamily: 'Montserrat, sans-serif',
+                        fontWeight: 600
+                      }}>Last Check</span>
+                      <span style={{
+                        fontSize: '14px',
+                        fontWeight: 700,
+                        color: '#333',
+                        fontFamily: 'Montserrat, sans-serif'
+                      }}>{new Date(analyticsData.timestamp).toLocaleTimeString('ro-RO')}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <p style={{ textAlign: 'center', color: '#666', fontFamily: 'Montserrat, sans-serif' }}>
+                Nu s-au putut încărca datele de analytics.
+              </p>
+            )}
+          </div>
+        )}
+
+
+        {/* Anunțuri Section */}
+        {activeSection === 'anunturi' && (
+          <div style={{
+            backgroundColor: '#fff',
+            borderRadius: '15px',
+            padding: '30px',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.08)'
+          }}>
+            {loadingContent ? (
+              <p style={{ textAlign: 'center', color: '#666', fontFamily: 'Montserrat, sans-serif' }}>
+                Se încarcă...
+              </p>
+            ) : anunturi.length === 0 ? (
+              <p style={{ textAlign: 'center', color: '#666', fontFamily: 'Montserrat, sans-serif' }}>
+                Nu există anunțuri.
+              </p>
+            ) : (
+              <div>
+                <h2 style={{
+                  fontSize: '20px',
+                  fontWeight: 700,
+                  color: '#333',
+                  fontFamily: 'Montserrat, sans-serif',
+                  marginBottom: '20px',
+                  marginTop: 0
+                }}>
+                  Toate Anunțurile ({anunturi.length})
+                </h2>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                  {anunturi.map((anunt: any) => (
+                    <div key={anunt.id} style={{
+                      padding: '20px',
+                      border: '1px solid #e0e0e0',
+                      borderRadius: '10px',
+                      transition: 'all 0.3s ease'
+                    }}>
+                      <h3 style={{
+                        fontSize: '18px',
+                        fontWeight: 700,
+                        color: '#333',
+                        fontFamily: 'Montserrat, sans-serif',
+                        marginBottom: '8px',
+                        marginTop: 0
+                      }}>
+                        {anunt.titlu}
+                      </h3>
+                      {anunt.rezumat && (
+                        <p style={{
+                          fontSize: '14px',
+                          color: '#666',
+                          fontFamily: 'Montserrat, sans-serif',
+                          marginBottom: '10px'
+                        }}>
+                          {anunt.rezumat}
+                        </p>
+                      )}
+                      <div style={{ display: 'flex', gap: '15px', fontSize: '13px', color: '#888' }}>
+                        <span>📊 {anunt.vizualizari || 0} vizualizări</span>
+                        <span>📅 {new Date(anunt.created_at).toLocaleDateString('ro-RO')}</span>
+                        <span style={{
+                          padding: '2px 8px',
+                          borderRadius: '4px',
+                          backgroundColor: anunt.publicat ? '#e8f5e9' : '#fff3e0',
+                          color: anunt.publicat ? '#4caf50' : '#ff9800'
+                        }}>
+                          {anunt.publicat ? 'Publicat' : 'Draft'}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Blog Section */}
+        {activeSection === 'blog' && !showBlogEditor && (
+          <div style={{
+            backgroundColor: '#fff',
+            borderRadius: '15px',
+            padding: '30px',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.08)'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px' }}>
+              <h2 style={{
+                fontSize: '20px',
+                fontWeight: 700,
+                color: '#333',
+                fontFamily: 'Montserrat, sans-serif',
+                margin: 0
+              }}>
+                Toate Articolele ({blogArticles.length})
+              </h2>
+              <button
+                onClick={() => setShowBlogEditor(true)}
+                style={{
+                  padding: '10px 20px',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  fontFamily: 'Montserrat, sans-serif',
+                  color: '#fff',
+                  backgroundColor: '#4caf50',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: 'pointer'
+                }}
+              >
+                + Articol Nou
+              </button>
+            </div>
+
+            {loadingContent ? (
+              <p style={{ textAlign: 'center', color: '#666', fontFamily: 'Montserrat, sans-serif' }}>
+                Se încarcă...
+              </p>
+            ) : blogArticles.length === 0 ? (
+              <p style={{ textAlign: 'center', color: '#666', fontFamily: 'Montserrat, sans-serif' }}>
+                Nu există articole. Scrie primul articol!
+              </p>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                {blogArticles.map((article: any) => (
+                  <div key={article.id} style={{
+                    padding: '20px',
+                    border: '1px solid #e0e0e0',
+                    borderRadius: '10px',
+                    transition: 'all 0.3s ease',
+                    display: 'flex',
+                    gap: '20px'
+                  }}>
+                    {article.imagine_principala && (
+                      <div style={{ flexShrink: 0 }}>
+                        <img
+                          src={article.imagine_principala}
+                          alt={article.titlu}
+                          style={{
+                            width: '150px',
+                            height: '100px',
+                            objectFit: 'cover',
+                            borderRadius: '8px'
+                          }}
+                        />
+                      </div>
+                    )}
+                    <div style={{ flex: 1 }}>
+                      <h3 style={{
+                        fontSize: '18px',
+                        fontWeight: 700,
+                        color: '#333',
+                        fontFamily: 'Montserrat, sans-serif',
+                        marginBottom: '8px',
+                        marginTop: 0
+                      }}>
+                        {article.titlu}
+                      </h3>
+                      {article.rezumat && (
+                        <p style={{
+                          fontSize: '14px',
+                          color: '#666',
+                          fontFamily: 'Montserrat, sans-serif',
+                          marginBottom: '10px'
+                        }}>
+                          {article.rezumat}
+                        </p>
+                      )}
+                      <div style={{ display: 'flex', gap: '15px', fontSize: '13px', color: '#888', alignItems: 'center' }}>
+                        <span>📊 {article.vizualizari || 0} vizualizări</span>
+                        <span>📅 {new Date(article.created_at).toLocaleDateString('ro-RO')}</span>
+                        <span style={{
+                          padding: '2px 8px',
+                          borderRadius: '4px',
+                          backgroundColor: article.publicat ? '#e8f5e9' : '#fff3e0',
+                          color: article.publicat ? '#4caf50' : '#ff9800'
+                        }}>
+                          {article.publicat ? 'Publicat' : 'Draft'}
+                        </span>
+                        <Link
+                          href={`/blog/${article.id}`}
+                          target="_blank"
+                          style={{
+                            marginLeft: 'auto',
+                            padding: '6px 15px',
+                            fontSize: '13px',
+                            fontWeight: 600,
+                            fontFamily: 'Montserrat, sans-serif',
+                            color: '#1e88e5',
+                            backgroundColor: '#e3f2fd',
+                            border: 'none',
+                            borderRadius: '6px',
+                            textDecoration: 'none',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          Vezi Articol →
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Blog Editor */}
+        {activeSection === 'blog' && showBlogEditor && (
+          <BlogEditor
+            onCancel={() => setShowBlogEditor(false)}
+            onSave={() => {
+              setShowBlogEditor(false);
+              loadBlog();
+            }}
+          />
+        )}
+
+        {/* Anunțuri Section */}
+        {activeSection === 'anunturi' && (
+          <div style={{
+            backgroundColor: '#fff',
+            borderRadius: '15px',
+            padding: '30px',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.08)'
+          }}>
+            {loadingContent ? (
+              <p style={{ textAlign: 'center', color: '#666', fontFamily: 'Montserrat, sans-serif' }}>
+                Se încarcă...
+              </p>
+            ) : anunturi.length === 0 ? (
+              <p style={{ textAlign: 'center', color: '#666', fontFamily: 'Montserrat, sans-serif' }}>
+                Nu există anunțuri. Adaugă primul anunț!
+              </p>
+            ) : (
+              <div>
+                <h2 style={{
+                  fontSize: '20px',
+                  fontWeight: 700,
+                  color: '#333',
+                  fontFamily: 'Montserrat, sans-serif',
+                  marginBottom: '20px',
+                  marginTop: 0
+                }}>
+                  Toate Anunțurile ({anunturi.length})
+                </h2>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                  {anunturi.map((anunt: any) => (
+                    <div key={anunt.id} style={{
+                      padding: '20px',
+                      border: '1px solid #e0e0e0',
+                      borderRadius: '10px',
+                      transition: 'all 0.3s ease'
+                    }}>
+                      <h3 style={{
+                        fontSize: '18px',
+                        fontWeight: 700,
+                        color: '#333',
+                        fontFamily: 'Montserrat, sans-serif',
+                        marginBottom: '8px',
+                        marginTop: 0
+                      }}>
+                        {anunt.titlu}
+                      </h3>
+                      {anunt.rezumat && (
+                        <p style={{
+                          fontSize: '14px',
+                          color: '#666',
+                          fontFamily: 'Montserrat, sans-serif',
+                          marginBottom: '10px'
+                        }}>
+                          {anunt.rezumat}
+                        </p>
+                      )}
+                      <div style={{ display: 'flex', gap: '15px', fontSize: '13px', color: '#888' }}>
+                        <span>📊 {anunt.vizualizari || 0} vizualizări</span>
+                        <span>📅 {new Date(anunt.created_at).toLocaleDateString('ro-RO')}</span>
+                        <span style={{
+                          padding: '2px 8px',
+                          borderRadius: '4px',
+                          backgroundColor: anunt.publicat ? '#e8f5e9' : '#fff3e0',
+                          color: anunt.publicat ? '#4caf50' : '#ff9800'
+                        }}>
+                          {anunt.publicat ? 'Publicat' : 'Draft'}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Blog Section */}
+        {activeSection === 'blog' && !showBlogEditor && (
+          <div style={{
+            backgroundColor: '#fff',
+            borderRadius: '15px',
+            padding: '30px',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.08)'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px' }}>
+              <h2 style={{
+                fontSize: '20px',
+                fontWeight: 700,
+                color: '#333',
+                fontFamily: 'Montserrat, sans-serif',
+                margin: 0
+              }}>
+                Toate Articolele ({blogArticles.length})
+              </h2>
+              <button
+                onClick={() => setShowBlogEditor(true)}
+                style={{
+                  padding: '10px 20px',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  fontFamily: 'Montserrat, sans-serif',
+                  color: '#fff',
+                  backgroundColor: '#4caf50',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: 'pointer'
+                }}
+              >
+                + Articol Nou
+              </button>
+            </div>
+
+            {loadingContent ? (
+              <p style={{ textAlign: 'center', color: '#666', fontFamily: 'Montserrat, sans-serif' }}>
+                Se încarcă...
+              </p>
+            ) : blogArticles.length === 0 ? (
+              <p style={{ textAlign: 'center', color: '#666', fontFamily: 'Montserrat, sans-serif' }}>
+                Nu există articole. Scrie primul articol!
+              </p>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                {blogArticles.map((article: any) => (
+                  <div key={article.id} style={{
+                    padding: '20px',
+                    border: '1px solid #e0e0e0',
+                    borderRadius: '10px',
+                    transition: 'all 0.3s ease',
+                    display: 'flex',
+                    gap: '20px'
+                  }}>
+                    {article.imagine_principala && (
+                      <div style={{ flexShrink: 0 }}>
+                        <img
+                          src={article.imagine_principala}
+                          alt={article.titlu}
+                          style={{
+                            width: '150px',
+                            height: '100px',
+                            objectFit: 'cover',
+                            borderRadius: '8px'
+                          }}
+                        />
+                      </div>
+                    )}
+                    <div style={{ flex: 1 }}>
+                      <h3 style={{
+                        fontSize: '18px',
+                        fontWeight: 700,
+                        color: '#333',
+                        fontFamily: 'Montserrat, sans-serif',
+                        marginBottom: '8px',
+                        marginTop: 0
+                      }}>
+                        {article.titlu}
+                      </h3>
+                      {article.rezumat && (
+                        <p style={{
+                          fontSize: '14px',
+                          color: '#666',
+                          fontFamily: 'Montserrat, sans-serif',
+                          marginBottom: '10px'
+                        }}>
+                          {article.rezumat}
+                        </p>
+                      )}
+                      <div style={{ display: 'flex', gap: '15px', fontSize: '13px', color: '#888', alignItems: 'center' }}>
+                        <span>📊 {article.vizualizari || 0} vizualizări</span>
+                        <span>📅 {new Date(article.created_at).toLocaleDateString('ro-RO')}</span>
+                        <span style={{
+                          padding: '2px 8px',
+                          borderRadius: '4px',
+                          backgroundColor: article.publicat ? '#e8f5e9' : '#fff3e0',
+                          color: article.publicat ? '#4caf50' : '#ff9800'
+                        }}>
+                          {article.publicat ? 'Publicat' : 'Draft'}
+                        </span>
+                        <Link
+                          href={`/blog/${article.id}`}
+                          target="_blank"
+                          style={{
+                            marginLeft: 'auto',
+                            padding: '6px 15px',
+                            fontSize: '13px',
+                            fontWeight: 600,
+                            fontFamily: 'Montserrat, sans-serif',
+                            color: '#1e88e5',
+                            backgroundColor: '#e3f2fd',
+                            border: 'none',
+                            borderRadius: '6px',
+                            textDecoration: 'none',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          Vezi Articol →
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Blog Editor */}
+        {activeSection === 'blog' && showBlogEditor && (
+          <BlogEditor
+            onCancel={() => setShowBlogEditor(false)}
+            onSave={() => {
+              setShowBlogEditor(false);
+              loadBlog();
+            }}
+          />
+        )}
+
+        {/*               style={{
+                            marginLeft: 'auto',
+                            padding: '6px 15px',
+                            fontSize: '13px',
+                            fontWeight: 600,
+                            fontFamily: 'Montserrat, sans-serif',
+                            color: '#1e88e5',
+                            backgroundColor: '#e3f2fd',
+                            border: 'none',
+                            borderRadius: '6px',
+                            textDecoration: 'none',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          Vezi Articol →
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                ))}  marginTop: 0
+                      }}>
+                        {article.titlu}
+                      </h3>
+                      {article.rezumat && (
+                        <p style={{
+                          fontSize: '14px',
+                          color: '#666',
+                          fontFamily: 'Montserrat, sans-serif',
+                          marginBottom: '10px'
+                        }}>
+                          {article.rezumat}
+                        </p>
+                      )}
+                      <div style={{ display: 'flex', gap: '15px', fontSize: '13px', color: '#888' }}>
+                        <span>📊 {article.vizualizari || 0} vizualizări</span>
+                        <span>📅 {new Date(article.created_at).toLocaleDateString('ro-RO')}</span>
+                        <span style={{
+                          padding: '2px 8px',
+                          borderRadius: '4px',
+                          backgroundColor: article.publicat ? '#e8f5e9' : '#fff3e0',
+                          color: article.publicat ? '#4caf50' : '#ff9800'
+                        }}>
+                          {article.publicat ? 'Publicat' : 'Draft'}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Galerie & Setări Placeholder */}
+        {(activeSection === 'galerie' || activeSection === 'setari') && (
           <div style={{
             backgroundColor: '#fff',
             borderRadius: '15px',

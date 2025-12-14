@@ -452,7 +452,7 @@ export default function Home() {
               De la organizarea de evenimente și activități extrașcolare, până la reprezentarea elevilor în dialogul cu conducerea școlii, Consiliul Elevilor este punctul de legătură esențial între elevi și administrație. Ne implicăm activ în luarea deciziilor care ne afectează viața școlară și promovăm un mediu educațional incluziv și echitabil pentru toți.
             </p>
 
-            <Link href="#contact" style={{
+            <Link href="/contact" style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: '10px',
@@ -620,7 +620,7 @@ export default function Home() {
             Vrei să fii la curent cu ultimele noastre articole?
           </h2>
 
-          <Link href="#blog" style={{
+          <Link href="/anunturi" style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '12px',

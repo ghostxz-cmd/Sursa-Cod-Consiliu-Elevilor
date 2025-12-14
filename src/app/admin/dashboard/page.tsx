@@ -7,6 +7,7 @@ import Link from 'next/link';
 import BlogEditor from '@/components/BlogEditor';
 import AnuntEditor from '@/components/AnuntEditor';
 import AlbumEditor from '@/components/AlbumEditor';
+import PartenerEditor from '@/components/PartenerEditor';
 
 interface DashboardStats {
   totalAnunturi: number;
@@ -31,7 +32,9 @@ export default function AdminDashboard() {
   const [showBlogEditor, setShowBlogEditor] = useState(false);
   const [showAnuntEditor, setShowAnuntEditor] = useState(false);
   const [showAlbumEditor, setShowAlbumEditor] = useState(false);
+  const [showPartenerEditor, setShowPartenerEditor] = useState(false);
   const [albume, setAlbume] = useState<any[]>([]);
+  const [parteneri, setParteneri] = useState<any[]>([]);
   const [analyticsData, setAnalyticsData] = useState<any>(null);
 
   useEffect(() => {
@@ -119,6 +122,21 @@ export default function AdminDashboard() {
       }
     } catch (error) {
       console.error('Failed to load albume:', error);
+    } finally {
+      setLoadingContent(false);
+    }
+  };
+
+  const loadParteneri = async () => {
+    setLoadingContent(true);
+    try {
+      const response = await fetch('/api/parteneri');
+      if (response.ok) {
+        const data = await response.json();
+        setParteneri(data || []);
+      }
+    } catch (error) {
+      console.error('Failed to load parteneri:', error);
     } finally {
       setLoadingContent(false);
     }
@@ -344,6 +362,7 @@ export default function AdminDashboard() {
               {activeSection === 'anunturi' && 'Gestionare Anunțuri'}
               {activeSection === 'blog' && 'Gestionare Blog'}
               {activeSection === 'galerie' && 'Gestionare Galerie'}
+              {activeSection === 'parteneri' && 'Gestionare Parteneri'}
               {activeSection === 'setari' && 'Setări'}
             </h1>
             <p style={{
@@ -1728,6 +1747,230 @@ export default function AdminDashboard() {
             onSave={() => {
               setShowAlbumEditor(false);
               loadAlbume();
+            }}
+          />
+        )}
+
+        {/* Parteneri Section */}
+        {activeSection === 'parteneri' && !showPartenerEditor && (
+          <div>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: '30px'
+            }}>
+              <h2 style={{
+                fontSize: '24px',
+                fontWeight: 700,
+                color: '#333',
+                fontFamily: 'Montserrat, sans-serif',
+                margin: 0
+              }}>
+                Partenerii Noștri
+              </h2>
+              <button
+                onClick={() => setShowPartenerEditor(true)}
+                style={{
+                  padding: '12px 24px',
+                  backgroundColor: '#1e88e5',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: '8px',
+                  fontSize: '15px',
+                  fontWeight: 600,
+                  fontFamily: 'Montserrat, sans-serif',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#1976d2'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1e88e5'}
+              >
+                + Partener Nou
+              </button>
+            </div>
+
+            {loadingContent ? (
+              <div style={{
+                textAlign: 'center',
+                padding: '60px',
+                fontSize: '16px',
+                color: '#666',
+                fontFamily: 'Montserrat, sans-serif'
+              }}>
+                Se încarcă...
+              </div>
+            ) : parteneri.length === 0 ? (
+              <div style={{
+                backgroundColor: '#fff',
+                borderRadius: '12px',
+                padding: '60px',
+                textAlign: 'center',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
+              }}>
+                <p style={{
+                  fontSize: '16px',
+                  color: '#666',
+                  fontFamily: 'Montserrat, sans-serif',
+                  margin: 0
+                }}>
+                  Nu există parteneri. Creează primul partener!
+                </p>
+              </div>
+            ) : (
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+                gap: '25px'
+              }}>
+                {parteneri.map((partener: any) => (
+                  <div
+                    key={partener.id}
+                    style={{
+                      backgroundColor: '#fff',
+                      borderRadius: '12px',
+                      overflow: 'hidden',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                      transition: 'all 0.3s'
+                    }}
+                  >
+                    <div style={{
+                      padding: '30px',
+                      backgroundColor: '#f8f9fa',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      minHeight: '180px'
+                    }}>
+                      <img
+                        src={partener.logo}
+                        alt={partener.nume}
+                        style={{
+                          maxWidth: '100%',
+                          maxHeight: '140px',
+                          objectFit: 'contain'
+                        }}
+                      />
+                    </div>
+
+                    <div style={{ padding: '20px' }}>
+                      <h3 style={{
+                        fontSize: '18px',
+                        fontWeight: 700,
+                        color: '#1a1a1a',
+                        fontFamily: 'Montserrat, sans-serif',
+                        marginBottom: '10px',
+                        marginTop: 0
+                      }}>
+                        {partener.nume}
+                      </h3>
+
+                      {partener.descriere_scurta && (
+                        <p style={{
+                          fontSize: '14px',
+                          color: '#666',
+                          fontFamily: 'Montserrat, sans-serif',
+                          lineHeight: '1.5',
+                          marginBottom: '15px'
+                        }}>
+                          {partener.descriere_scurta.substring(0, 100)}
+                          {partener.descriere_scurta.length > 100 ? '...' : ''}
+                        </p>
+                      )}
+
+                      <div style={{
+                        display: 'flex',
+                        gap: '8px',
+                        fontSize: '13px',
+                        color: '#999',
+                        fontFamily: 'Montserrat, sans-serif',
+                        marginBottom: '15px'
+                      }}>
+                        <span style={{
+                          padding: '4px 10px',
+                          backgroundColor: partener.publicat ? '#e8f5e9' : '#fff3e0',
+                          color: partener.publicat ? '#2e7d32' : '#f57c00',
+                          borderRadius: '4px',
+                          fontSize: '12px',
+                          fontWeight: 600
+                        }}>
+                          {partener.publicat ? 'Publicat' : 'Draft'}
+                        </span>
+                        <span>👁 {partener.vizualizari || 0}</span>
+                      </div>
+
+                      <div style={{
+                        display: 'flex',
+                        gap: '10px'
+                      }}>
+                        <Link
+                          href={`/parteneri/${partener.id}`}
+                          target="_blank"
+                          style={{
+                            flex: 1,
+                            padding: '10px',
+                            backgroundColor: '#e3f2fd',
+                            color: '#1e88e5',
+                            border: 'none',
+                            borderRadius: '6px',
+                            fontSize: '14px',
+                            fontWeight: 600,
+                            fontFamily: 'Montserrat, sans-serif',
+                            textAlign: 'center',
+                            textDecoration: 'none',
+                            transition: 'all 0.2s'
+                          }}
+                        >
+                          Vezi Partener
+                        </Link>
+                        <button
+                          onClick={async () => {
+                            if (confirm('Sigur vrei să ștergi acest partener?')) {
+                              try {
+                                const response = await fetch(`/api/parteneri/${partener.id}`, {
+                                  method: 'DELETE'
+                                });
+                                if (response.ok) {
+                                  loadParteneri();
+                                }
+                              } catch (error) {
+                                console.error('Error deleting partener:', error);
+                              }
+                            }
+                          }}
+                          style={{
+                            padding: '10px 16px',
+                            backgroundColor: '#ffebee',
+                            color: '#d32f2f',
+                            border: 'none',
+                            borderRadius: '6px',
+                            fontSize: '14px',
+                            fontWeight: 600,
+                            fontFamily: 'Montserrat, sans-serif',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s'
+                          }}
+                          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#ffcdd2'}
+                          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ffebee'}
+                        >
+                          Șterge
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Partener Editor Modal */}
+        {activeSection === 'parteneri' && showPartenerEditor && (
+          <PartenerEditor
+            onCancel={() => setShowPartenerEditor(false)}
+            onSave={() => {
+              setShowPartenerEditor(false);
+              loadParteneri();
             }}
           />
         )}

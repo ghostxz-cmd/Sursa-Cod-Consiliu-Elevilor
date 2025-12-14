@@ -102,22 +102,6 @@ export default function Header() {
             Galerie
           </Link>
           <Link 
-            href="/blog" 
-            className="nav-link"
-            style={{
-              textDecoration: 'none',
-              color: '#555',
-              fontSize: '15px',
-              fontWeight: 700,
-              fontFamily: 'Montserrat, sans-serif',
-              transition: 'color 0.3s ease'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.color = '#1e88e5'}
-            onMouseLeave={(e) => e.currentTarget.style.color = '#555'}
-          >
-            Blog
-          </Link>
-          <Link 
             href="/contact" 
             className="nav-link"
             style={{

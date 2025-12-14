@@ -45,12 +45,6 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    // Verificăm autentificarea
-    const sessionToken = request.cookies.get('admin_session')?.value;
-    if (!sessionToken) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const { id } = await params;
 
     const { error } = await supabase

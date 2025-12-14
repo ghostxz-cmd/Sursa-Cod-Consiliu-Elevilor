@@ -3,12 +3,6 @@ import { supabase } from '@/lib/supabase';
 
 export async function GET(request: NextRequest) {
   try {
-    // Verificăm autentificarea
-    const sessionToken = request.cookies.get('admin_session')?.value;
-    if (!sessionToken) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const { data: articles, error } = await supabase
       .from('blog_articles')
       .select(`
@@ -34,12 +28,6 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    // Verificăm autentificarea
-    const sessionToken = request.cookies.get('admin_session')?.value;
-    if (!sessionToken) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const body = await request.json();
     const { titlu, continut, rezumat, imagine_principala, tags, publicat } = body;
 

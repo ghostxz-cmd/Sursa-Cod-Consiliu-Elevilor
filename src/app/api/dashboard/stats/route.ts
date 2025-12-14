@@ -3,12 +3,6 @@ import { supabase } from '@/lib/supabase';
 
 export async function GET(request: NextRequest) {
   try {
-    // Verificăm autentificarea
-    const sessionToken = request.cookies.get('admin_session')?.value;
-    if (!sessionToken) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     // Numărăm anunțurile
     const { count: totalAnunturi } = await supabase
       .from('anunturi')

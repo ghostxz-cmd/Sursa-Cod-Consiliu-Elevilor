@@ -1,5 +1,6 @@
 import { Montserrat, Nunito } from 'next/font/google';
 import './globals.css';
+import './responsive.css';
 
 const montserrat = Montserrat({ 
   subsets: ['latin'],

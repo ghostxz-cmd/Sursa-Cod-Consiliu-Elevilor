@@ -188,7 +188,6 @@ export default function Header() {
             className="mobile-menu-btn"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             style={{
-              display: 'none',
               border: 'none',
               background: 'none',
               fontSize: '30px',
@@ -223,26 +222,25 @@ export default function Header() {
       )}
 
       {/* Mobile Navigation Menu */}
-      <nav 
-        className="mobile-nav"
-        style={{
-          position: 'fixed',
-          top: '70px',
-          left: 0,
-          right: 0,
-          backgroundColor: '#fff',
-          boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
-          padding: '20px',
-          display: 'none',
-          flexDirection: 'column',
-          gap: '0',
-          zIndex: 999,
-          maxHeight: 'calc(100vh - 70px)',
-          overflowY: 'auto',
-          transform: mobileMenuOpen ? 'translateY(0)' : 'translateY(-100%)',
-          transition: 'transform 0.3s ease'
-        }}
-      >
+      {mobileMenuOpen && (
+        <nav 
+          className="mobile-nav"
+          style={{
+            position: 'fixed',
+            top: '70px',
+            left: 0,
+            right: 0,
+            backgroundColor: '#fff',
+            boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+            padding: '20px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0',
+            zIndex: 999,
+            maxHeight: 'calc(100vh - 70px)',
+            overflowY: 'auto'
+          }}
+        >
         {/* Logo Section in Mobile Menu */}
         <div style={{
           display: 'flex',
@@ -376,7 +374,8 @@ export default function Header() {
         >
           Contact
         </Link>
-      </nav>
+        </nav>
+      )}
 
       <style jsx>{`
         @media (max-width: 768px) {
@@ -386,14 +385,11 @@ export default function Header() {
           .desktop-logo-icon {
             display: none !important;
           }
+        }
+
+        @media (min-width: 769px) {
           .mobile-menu-btn {
-            display: block !important;
-          }
-          .mobile-nav {
-            display: flex !important;
-          }
-          .mobile-overlay {
-            display: block !important;
+            display: none !important;
           }
         }
       `}</style>

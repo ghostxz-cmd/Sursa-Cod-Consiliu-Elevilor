@@ -2,31 +2,16 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { cookies } from 'next/headers';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
-async function isAuthenticated(request: NextRequest) {
-  const cookieStore = await cookies();
-  const sessionId = cookieStore.get('admin_session')?.value;
-
-  if (!sessionId) return false;
-
-  const { data } = await supabase
-    .from('admin_sessions')
-    .select('*')
-    .eq('session_id', sessionId)
-    .single();
-
-  return !!data;
-}
-
 export async function GET(
   request: NextRequest,
   context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+
     const { id } = await context.params;
 
     const { data: album, error } = await supabase
@@ -54,6 +39,11 @@ export async function DELETE(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+
     const { id } = await context.params;
 
     const { error } = await supabase

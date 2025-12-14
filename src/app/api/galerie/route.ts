@@ -2,35 +2,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { cookies } from 'next/headers';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
-async function isAuthenticated(request: NextRequest) {
-  const cookieStore = await cookies();
-  const sessionId = cookieStore.get('admin_session')?.value;
-
-  console.log('🔐 Checking auth - sessionId:', sessionId);
-
-  if (!sessionId) {
-    console.log('❌ No session ID found');
-    return false;
-  }
-
-  const { data, error } = await supabase
-    .from('admin_sessions')
-    .select('*')
-    .eq('session_id', sessionId)
-    .single();
-
-  console.log('🔍 Session lookup - data:', data, 'error:', error);
-
-  return !!data;
-}
-
 export async function GET() {
   try {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+
     const { data: albume, error } = await supabase
       .from('galerie_albume')
       .select('*')
@@ -47,6 +25,11 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+
     const body = await request.json();
     const { titlu, descriere, coperta, poze, publicat } = body;
 

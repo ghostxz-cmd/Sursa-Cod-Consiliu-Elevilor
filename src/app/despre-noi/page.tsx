@@ -2,6 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import Header from '@/components/Header';
+import '../mobile-responsive.css';
 
 export default function DespreNoi() {
   const teamMembers = [
@@ -54,111 +56,7 @@ export default function DespreNoi() {
 
   return (
     <div style={{ backgroundColor: '#fff' }}>
-      {/* Header Navigation */}
-      <header style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        backgroundColor: '#fff',
-        boxShadow: '0 2px 10px rgba(0,0,0,0.08)',
-        zIndex: 1000,
-        padding: '15px 50px'
-      }}>
-        <div style={{
-          maxWidth: '1400px',
-          margin: '0 auto',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between'
-        }}>
-          <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
-            <Image
-              src="/images/cropped-logo_color_simplu.png"
-              alt="Consiliul Elevilor"
-              width={180}
-              height={60}
-              style={{ objectFit: 'contain' }}
-            />
-          </Link>
-          
-          <nav style={{
-            display: 'flex',
-            gap: '35px',
-            alignItems: 'center'
-          }}>
-            <Link href="/" style={{
-              textDecoration: 'none',
-              color: '#555',
-              fontSize: '15px',
-              fontWeight: 700,
-              fontFamily: 'Montserrat, sans-serif',
-              transition: 'color 0.3s ease'
-            }}>
-              Acasă
-            </Link>
-            <Link href="/despre-noi" style={{
-              textDecoration: 'none',
-              color: '#1e88e5',
-              fontSize: '15px',
-              fontWeight: 700,
-              fontFamily: 'Montserrat, sans-serif',
-              transition: 'color 0.3s ease'
-            }}>
-              Despre noi
-            </Link>
-            <Link href="/anunturi" style={{
-              textDecoration: 'none',
-              color: '#555',
-              fontSize: '15px',
-              fontWeight: 700,
-              fontFamily: 'Montserrat, sans-serif',
-              transition: 'color 0.3s ease'
-            }}>
-              Anunturi
-            </Link>
-            <Link href="/#galerie" style={{
-              textDecoration: 'none',
-              color: '#555',
-              fontSize: '15px',
-              fontWeight: 700,
-              fontFamily: 'Montserrat, sans-serif',
-              transition: 'color 0.3s ease'
-            }}>
-              Galerie
-            </Link>
-            <Link href="/#contact" style={{
-              textDecoration: 'none',
-              color: '#555',
-              fontSize: '15px',
-              fontWeight: 700,
-              fontFamily: 'Montserrat, sans-serif',
-              transition: 'color 0.3s ease'
-            }}>
-              Contact
-            </Link>
-          </nav>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-            <Link href="/implica-te" style={{
-              textDecoration: 'none',
-              backgroundColor: '#1e88e5',
-              color: '#fff',
-              padding: '10px 24px',
-              borderRadius: '25px',
-              fontSize: '14px',
-              fontWeight: 600,
-              fontFamily: 'Montserrat, sans-serif',
-              transition: 'all 0.3s ease',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px'
-            }}>
-              Implică-te! →
-            </Link>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <section style={{

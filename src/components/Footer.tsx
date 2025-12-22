@@ -173,15 +173,6 @@ export default function Footer() {
             gap: '20px'
           }}>
             <li>
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" style={{
-                color: '#65666C',
-                textDecoration: 'none',
-                transition: 'color 0.3s ease'
-              }}>
-                Facebook
-              </a>
-            </li>
-            <li>
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" style={{
                 color: '#65666C',
                 textDecoration: 'none',

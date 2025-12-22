@@ -23,7 +23,7 @@ export default function Footer() {
               fontFamily: 'Montserrat, sans-serif',
               fontSize: '18px',
               fontWeight: 600,
-              color: '#1fcdff',
+              color: '#1e88e5',
               marginBottom: '20px'
             }}>
               Despre Noi
@@ -35,28 +35,34 @@ export default function Footer() {
             }}>
               <li style={{ marginBottom: '10px' }}>
                 <Link href="/despre-noi" style={{
-                  color: '#1fcdff',
+                  color: '#555',
                   textDecoration: 'none',
                   transition: 'color 0.3s ease'
-                }}>
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#1e88e5'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#555'}>
                   Cine suntem
                 </Link>
               </li>
               <li style={{ marginBottom: '10px' }}>
                 <Link href="/blog" style={{
-                  color: '#1fcdff',
+                  color: '#555',
                   textDecoration: 'none',
                   transition: 'color 0.3s ease'
-                }}>
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#1e88e5'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#555'}>
                   Blog
                 </Link>
               </li>
               <li style={{ marginBottom: '10px' }}>
                 <Link href="/anunturi" style={{
-                  color: '#1fcdff',
+                  color: '#555',
                   textDecoration: 'none',
                   transition: 'color 0.3s ease'
-                }}>
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#1e88e5'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#555'}>
                   Anunțuri
                 </Link>
               </li>
@@ -69,7 +75,7 @@ export default function Footer() {
               fontFamily: 'Montserrat, sans-serif',
               fontSize: '18px',
               fontWeight: 600,
-              color: '#1fcdff',
+              color: '#1e88e5',
               marginBottom: '20px'
             }}>
               Link-uri Rapide
@@ -81,28 +87,34 @@ export default function Footer() {
             }}>
               <li style={{ marginBottom: '10px' }}>
                 <Link href="/" style={{
-                  color: '#1fcdff',
+                  color: '#555',
                   textDecoration: 'none',
                   transition: 'color 0.3s ease'
-                }}>
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#1e88e5'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#555'}>
                   Acasă
                 </Link>
               </li>
               <li style={{ marginBottom: '10px' }}>
                 <Link href="/contact" style={{
-                  color: '#1fcdff',
+                  color: '#555',
                   textDecoration: 'none',
                   transition: 'color 0.3s ease'
-                }}>
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#1e88e5'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#555'}>
                   Contact
                 </Link>
               </li>
               <li style={{ marginBottom: '10px' }}>
                 <Link href="/galerie" style={{
-                  color: '#1fcdff',
+                  color: '#555',
                   textDecoration: 'none',
                   transition: 'color 0.3s ease'
-                }}>
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#1e88e5'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#555'}>
                   Galerie
                 </Link>
               </li>
@@ -115,7 +127,7 @@ export default function Footer() {
               fontFamily: 'Montserrat, sans-serif',
               fontSize: '18px',
               fontWeight: 600,
-              color: '#1fcdff',
+              color: '#1e88e5',
               marginBottom: '20px'
             }}>
               Contact
@@ -124,18 +136,21 @@ export default function Footer() {
               listStyle: 'none',
               padding: 0,
               margin: 0,
-              color: '#000000'
+              color: '#555'
             }}>
-              <li style={{ marginBottom: '10px' }}>
-                Email: <a href="mailto:ctgc.pn@gmail.com" style={{
-                  color: '#1fcdff',
-                  textDecoration: 'none'
-                }}>ctgc.pn@gmail.com</a>
+              <li style={{ marginBottom: '10px', color: '#555' }}>
+                Email: <a href="mailto:cse.ctgc@colegiulcartianu.ro" style={{
+                  color: '#1e88e5',
+                  textDecoration: 'none',
+                  transition: 'color 0.3s ease'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#4fc3f7'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#1e88e5'}>cse.ctgc@colegiulcartianu.ro</a>
               </li>
-              <li style={{ marginBottom: '10px' }}>
+              <li style={{ marginBottom: '10px', color: '#555' }}>
                 Consiliul Elevilor Gheorghe Cartianu
               </li>
-              <li style={{ marginBottom: '10px' }}>
+              <li style={{ marginBottom: '10px', color: '#555' }}>
                 Piatra Neamț, România
               </li>
             </ul>
@@ -160,7 +175,7 @@ export default function Footer() {
         }}>
           <div style={{
             fontSize: '14px',
-            color: '#000000',
+            color: '#666',
             fontFamily: 'Montserrat, sans-serif'
           }}>
             © {new Date().getFullYear()} Consiliul Elevilor Gheorghe Cartianu. Toate drepturile rezervate.
@@ -174,10 +189,12 @@ export default function Footer() {
           }}>
             <li>
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" style={{
-                color: '#65666C',
+                color: '#555',
                 textDecoration: 'none',
                 transition: 'color 0.3s ease'
-              }}>
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.color = '#1e88e5'}
+              onMouseLeave={(e) => e.currentTarget.style.color = '#555'}>
                 Instagram
               </a>
             </li>

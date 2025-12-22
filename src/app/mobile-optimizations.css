@@ -4,6 +4,50 @@
    MOBILE FIRST APPROACH
    ======================================== */
 
+/* Previne drag pe imagini și scrollbar vizibil */
+img, picture, video {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  pointer-events: none;
+  -webkit-touch-callout: none;
+}
+
+/* Link-urile și butoanele rămân interactive */
+a, button, input, textarea, select {
+  pointer-events: auto;
+  user-select: auto;
+  -webkit-user-select: auto;
+}
+
+/* Ascunde scrollbar complet */
+::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+}
+
+* {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
 /* Touch Targets Optimization */
 @media (max-width: 768px) {
   /* Asigură că toate elementele interactive sunt ușor de atins */

@@ -15,10 +15,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Verificare hard-codată pentru admin principal
-    if (email === 'ctgc.pn@gmail.com' && password === '299638rar') {
+    if (email === 'cse.ctgc@colegiulcartianu.ro' && password === '299638rar') {
       const adminUser = {
         id: 'hardcoded-admin-id',
-        email: 'ctgc.pn@gmail.com',
+        email: 'cse.ctgc@colegiulcartianu.ro',
         nume: 'Admin',
         prenume: 'CTGC',
         rol: 'super_admin' as const,

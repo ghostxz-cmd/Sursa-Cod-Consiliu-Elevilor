@@ -26,7 +26,7 @@ async function createAdmin() {
     const { data, error } = await supabase
       .from('admin_users')
       .insert({
-        email: 'ctgc.pn@gmail.com',
+        email: 'cse.ctgc@colegiulcartianu.ro',
         nume: 'Admin',
         prenume: 'CTGC',
         rol: 'super_admin',
@@ -44,7 +44,7 @@ async function createAdmin() {
         const { error: updateError } = await supabase
           .from('admin_users')
           .update({ password_hash: hash, activ: true })
-          .eq('email', 'ctgc.pn@gmail.com');
+          .eq('email', 'cse.ctgc@colegiulcartianu.ro');
 
         if (updateError) {
           console.error('Eroare la actualizarea parolei:', updateError);
@@ -58,7 +58,7 @@ async function createAdmin() {
     }
 
     console.log('✅ Utilizator admin creat cu succes!');
-    console.log('Email: ctgc.pn@gmail.com');
+    console.log('Email: cse.ctgc@colegiulcartianu.ro');
     console.log('Parola: 299638rar');
     console.log('Rol: super_admin');
     console.log('\nPoți accesa dashboard-ul la: http://localhost:3000/admin/login');

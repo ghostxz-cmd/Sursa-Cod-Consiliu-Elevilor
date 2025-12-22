@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import '../mobile-responsive.css';
 
 export default function DespreNoi() {
@@ -59,18 +60,18 @@ export default function DespreNoi() {
       <Header />
 
       {/* Hero Section */}
-      <section style={{
+      <section className="mobile-py-4" style={{
         paddingTop: '140px',
         paddingBottom: '80px',
         backgroundColor: '#f8f9fa',
         textAlign: 'center'
       }}>
-        <div style={{
+        <div className="mobile-px-2" style={{
           maxWidth: '900px',
           margin: '0 auto',
           padding: '0 50px'
         }}>
-          <h1 style={{
+          <h1 className="mobile-text-2xl mobile-mb-2" style={{
             fontSize: '56px',
             fontWeight: 700,
             color: '#333',
@@ -81,7 +82,7 @@ export default function DespreNoi() {
           }}>
             Despre <span style={{ color: '#1e88e5' }}>Consiliul Elevilor</span>
           </h1>
-          <p style={{
+          <p className="mobile-text-base mobile-leading-relaxed" style={{
             fontSize: '20px',
             lineHeight: '1.7',
             color: '#666',
@@ -94,12 +95,12 @@ export default function DespreNoi() {
       </section>
 
       {/* Mission Section */}
-      <section style={{
+      <section className="mobile-py-3 mobile-px-2" style={{
         padding: '100px 50px',
         maxWidth: '1200px',
         margin: '0 auto'
       }}>
-        <div style={{
+        <div className="mobile-grid-1 mobile-gap-lg" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
           gap: '50px'
@@ -178,7 +179,7 @@ export default function DespreNoi() {
       </section>
 
       {/* Team Section */}
-      <section style={{
+      <section className="mobile-py-3 mobile-px-2" style={{
         padding: '100px 50px',
         backgroundColor: '#f8f9fa'
       }}>
@@ -186,11 +187,11 @@ export default function DespreNoi() {
           maxWidth: '1400px',
           margin: '0 auto'
         }}>
-          <div style={{
+          <div className="mobile-mb-3" style={{
             textAlign: 'center',
             marginBottom: '70px'
           }}>
-            <h2 style={{
+            <h2 className="mobile-text-2xl mobile-mb-2" style={{
               fontSize: '48px',
               fontWeight: 700,
               color: '#333',
@@ -200,7 +201,7 @@ export default function DespreNoi() {
             }}>
               Echipa Noastră
             </h2>
-            <p style={{
+            <p className="mobile-text-base mobile-leading-relaxed mobile-px-2" style={{
               fontSize: '18px',
               color: '#666',
               fontFamily: 'Montserrat, sans-serif',
@@ -212,13 +213,13 @@ export default function DespreNoi() {
             </p>
           </div>
 
-          <div style={{
+          <div className="mobile-grid-2 mobile-gap-md" style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
             gap: '40px'
           }}>
             {teamMembers.map((member, index) => (
-              <div key={index} style={{
+              <div key={index} className="mobile-p-2" style={{
                 backgroundColor: '#fff',
                 borderRadius: '15px',
                 padding: '30px',
@@ -233,7 +234,9 @@ export default function DespreNoi() {
                   borderRadius: '10px',
                   overflow: 'hidden',
                   border: '4px solid #1e88e5',
-                  position: 'relative'
+                  position: 'relative',
+                  pointerEvents: 'none',
+                  userSelect: 'none'
                 }}>
                   <Image
                     src={member.image}
@@ -243,7 +246,9 @@ export default function DespreNoi() {
                     style={{
                       objectFit: 'cover',
                       width: '100%',
-                      height: '100%'
+                      height: '100%',
+                      pointerEvents: 'none',
+                      userSelect: 'none'
                     }}
                   />
                 </div>
@@ -272,150 +277,7 @@ export default function DespreNoi() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer style={{
-        backgroundColor: '#f8f9fa',
-        paddingTop: '60px',
-        paddingBottom: '30px',
-        marginTop: '0px'
-      }}>
-        <div style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          padding: '0 50px'
-        }}>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-            gap: '50px',
-            marginBottom: '40px'
-          }}>
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start'
-            }}>
-              <Image
-                width={120}
-                height={120}
-                src="/images/logo.png"
-                alt="Logo Colegiul Tehnic Gheorghe Cartianu"
-                style={{ objectFit: 'contain', marginBottom: '20px' }}
-              />
-              <h3 style={{
-                fontSize: '18px',
-                fontWeight: 700,
-                color: '#333',
-                fontFamily: 'Montserrat, sans-serif',
-                margin: 0
-              }}>
-                Colegiul Tehnic<br/>Gheorghe Cartianu
-              </h3>
-            </div>
-
-            <div>
-              <h4 style={{
-                fontSize: '18px',
-                fontWeight: 700,
-                color: '#333',
-                fontFamily: 'Montserrat, sans-serif',
-                marginBottom: '20px',
-                marginTop: 0
-              }}>
-                Contact
-              </h4>
-              <ul style={{
-                listStyle: 'none',
-                padding: 0,
-                margin: 0
-              }}>
-                <li style={{
-                  fontSize: '15px',
-                  color: '#666',
-                  fontFamily: 'Montserrat, sans-serif',
-                  marginBottom: '12px',
-                  lineHeight: '1.6'
-                }}>
-                  0771 016 232<br/>
-                  <span style={{ fontSize: '14px', color: '#888' }}>Antoci Rares Andrei</span>
-                </li>
-                <li style={{
-                  fontSize: '15px',
-                  color: '#666',
-                  fontFamily: 'Montserrat, sans-serif',
-                  marginBottom: '12px'
-                }}>
-                  ctgc.pn@gmail.com
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 style={{
-                fontSize: '18px',
-                fontWeight: 700,
-                color: '#333',
-                fontFamily: 'Montserrat, sans-serif',
-                marginBottom: '20px',
-                marginTop: 0
-              }}>
-                Social Media
-              </h4>
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '12px'
-              }}>
-                <Link href="#" style={{
-                  fontSize: '15px',
-                  color: '#1e88e5',
-                  fontFamily: 'Montserrat, sans-serif',
-                  textDecoration: 'none',
-                  fontWeight: 600,
-                  transition: 'color 0.3s ease'
-                }}>
-                  Facebook →
-                </Link>
-                <Link href="#" style={{
-                  fontSize: '15px',
-                  color: '#1e88e5',
-                  fontFamily: 'Montserrat, sans-serif',
-                  textDecoration: 'none',
-                  fontWeight: 600,
-                  transition: 'color 0.3s ease'
-                }}>
-                  Instagram →
-                </Link>
-                <Link href="#" style={{
-                  fontSize: '15px',
-                  color: '#1e88e5',
-                  fontFamily: 'Montserrat, sans-serif',
-                  textDecoration: 'none',
-                  fontWeight: 600,
-                  transition: 'color 0.3s ease'
-                }}>
-                  TikTok →
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          <div style={{
-            borderTop: '1px solid #ddd',
-            paddingTop: '25px',
-            textAlign: 'center'
-          }}>
-            <p style={{
-              fontSize: '14px',
-              color: '#888',
-              fontFamily: 'Montserrat, sans-serif',
-              margin: 0
-            }}>
-              © 2025 Consiliul Elevilor - Colegiul Tehnic Gheorghe Cartianu din Piatra Neamț
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

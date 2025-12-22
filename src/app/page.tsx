@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import ArticlesSection from '@/components/ArticlesSection';
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import './homepage.css';
 import './mobile-responsive.css';
 
@@ -218,20 +219,20 @@ export default function Home() {
       </div>
 
       {/* Despre Noi Section */}
-      <section style={{
+      <section className="mobile-py-3 mobile-px-2" style={{
         padding: '100px 50px',
         backgroundColor: '#fff',
         maxWidth: '1400px',
         margin: '0 auto'
       }}>
-        <div style={{
+        <div className="mobile-grid-1 mobile-gap-md" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))',
           gap: '60px',
           alignItems: 'center'
         }}>
           {/* Image Column */}
-          <div style={{
+          <div className="mobile-mb-3" style={{
             position: 'relative',
             display: 'flex',
             justifyContent: 'center'
@@ -242,7 +243,9 @@ export default function Home() {
               overflow: 'hidden',
               border: '8px solid #1e88e5',
               boxShadow: '20px 20px 0 rgba(30, 136, 229, 0.15)',
-              maxWidth: '550px'
+              maxWidth: '550px',
+              pointerEvents: 'none',
+              userSelect: 'none'
             }}>
               <Image
                 src="/images/desprenoi.jpg"
@@ -253,15 +256,18 @@ export default function Home() {
                   objectFit: 'cover',
                   width: '100%',
                   height: 'auto',
-                  display: 'block'
-                }}
+                  display: 'block',
+                  pointerEvents: 'none',
+                  userSelect: 'none',
+                  WebkitUserDrag: 'none'
+                } as React.CSSProperties}
               />
             </div>
           </div>
 
           {/* Content Column */}
-          <div>
-            <h2 style={{
+          <div className="mobile-text-center mobile-px-2">
+            <h2 className="mobile-text-2xl mobile-mb-2 mobile-leading-tight" style={{
               fontSize: '42px',
               fontWeight: 700,
               lineHeight: '1.3',
@@ -279,7 +285,7 @@ export default function Home() {
               }}>vocea elevilor</span> din Colegiul Nostru!
             </h2>
 
-            <p style={{
+            <p className="mobile-text-sm mobile-leading-relaxed mobile-mb-2" style={{
               fontSize: '16px',
               lineHeight: '1.8',
               color: '#666',
@@ -289,7 +295,7 @@ export default function Home() {
               Consiliul Elevilor la nivel de liceu este forța care unește și reprezintă interesele tuturor elevilor din școala noastră. Suntem o echipă de elevi dedicați, care lucrează pentru a face vocea colegilor noștri auzită și pentru a îmbunătăți experiența școlară a fiecăruia.
             </p>
 
-            <p style={{
+            <p className="mobile-text-sm mobile-leading-relaxed mobile-mb-3" style={{
               fontSize: '16px',
               lineHeight: '1.8',
               color: '#666',
@@ -299,7 +305,7 @@ export default function Home() {
               De la organizarea de evenimente și activități extrașcolare, până la reprezentarea elevilor în dialogul cu conducerea școlii, Consiliul Elevilor este punctul de legătură esențial între elevi și administrație. Ne implicăm activ în luarea deciziilor care ne afectează viața școlară și promovăm un mediu educațional incluziv și echitabil pentru toți.
             </p>
 
-            <Link href="/contact" style={{
+            <Link href="/contact" className="mobile-w-full mobile-justify-center" style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: '10px',
@@ -491,154 +497,7 @@ export default function Home() {
       {/* FAQ Section */}
       <FAQSection />
 
-      {/* Footer */}
-      <footer style={{
-        backgroundColor: '#f8f9fa',
-        paddingTop: '60px',
-        paddingBottom: '30px',
-        marginTop: '0px'
-      }}>
-        <div style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          padding: '0 50px'
-        }}>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-            gap: '50px',
-            marginBottom: '40px'
-          }}>
-            {/* Logo Column */}
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start'
-            }}>
-              <Image
-                width={120}
-                height={120}
-                src="/images/logo.png"
-                alt="Logo Colegiul Tehnic Gheorghe Cartianu"
-                style={{ objectFit: 'contain', marginBottom: '20px' }}
-              />
-              <h3 style={{
-                fontSize: '18px',
-                fontWeight: 700,
-                color: '#333',
-                fontFamily: 'Montserrat, sans-serif',
-                margin: 0
-              }}>
-                Colegiul Tehnic<br/>Gheorghe Cartianu
-              </h3>
-            </div>
-
-            {/* Contact Column */}
-            <div>
-              <h4 style={{
-                fontSize: '18px',
-                fontWeight: 700,
-                color: '#333',
-                fontFamily: 'Montserrat, sans-serif',
-                marginBottom: '20px',
-                marginTop: 0
-              }}>
-                Contact
-              </h4>
-              <ul style={{
-                listStyle: 'none',
-                padding: 0,
-                margin: 0
-              }}>
-                <li style={{
-                  fontSize: '15px',
-                  color: '#666',
-                  fontFamily: 'Montserrat, sans-serif',
-                  marginBottom: '12px',
-                  lineHeight: '1.6'
-                }}>
-                  📞 0771 016 232<br/>
-                  <span style={{ fontSize: '14px', color: '#888' }}>Antoci Rares Andrei</span>
-                </li>
-                <li style={{
-                  fontSize: '15px',
-                  color: '#666',
-                  fontFamily: 'Montserrat, sans-serif',
-                  marginBottom: '12px'
-                }}>
-                  ✉️ ctgc.pn@gmail.com
-                </li>
-              </ul>
-            </div>
-
-            {/* Social Media Column */}
-            <div>
-              <h4 style={{
-                fontSize: '18px',
-                fontWeight: 700,
-                color: '#333',
-                fontFamily: 'Montserrat, sans-serif',
-                marginBottom: '20px',
-                marginTop: 0
-              }}>
-                Social Media
-              </h4>
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '12px'
-              }}>
-                <Link href="#" style={{
-                  fontSize: '15px',
-                  color: '#1e88e5',
-                  fontFamily: 'Montserrat, sans-serif',
-                  textDecoration: 'none',
-                  fontWeight: 600,
-                  transition: 'color 0.3s ease'
-                }}>
-                  Facebook →
-                </Link>
-                <Link href="#" style={{
-                  fontSize: '15px',
-                  color: '#1e88e5',
-                  fontFamily: 'Montserrat, sans-serif',
-                  textDecoration: 'none',
-                  fontWeight: 600,
-                  transition: 'color 0.3s ease'
-                }}>
-                  Instagram →
-                </Link>
-                <Link href="#" style={{
-                  fontSize: '15px',
-                  color: '#1e88e5',
-                  fontFamily: 'Montserrat, sans-serif',
-                  textDecoration: 'none',
-                  fontWeight: 600,
-                  transition: 'color 0.3s ease'
-                }}>
-                  TikTok →
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* Copyright Bar */}
-          <div style={{
-            borderTop: '1px solid #ddd',
-            paddingTop: '25px',
-            textAlign: 'center'
-          }}>
-            <p style={{
-              fontSize: '14px',
-              color: '#888',
-              fontFamily: 'Montserrat, sans-serif',
-              margin: 0
-            }}>
-              © 2025 Consiliul Elevilor - Colegiul Tehnic Gheorghe Cartianu din Piatra Neamț
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
       <style jsx>{`
         /* Hero Slider Styles */

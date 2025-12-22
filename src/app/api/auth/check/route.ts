@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
     if (sessionToken.startsWith('hardcoded-session-')) {
       const adminUser = {
         id: 'hardcoded-admin-id',
-        email: 'ctgc.pn@gmail.com',
+        email: 'cse.ctgc@colegiulcartianu.ro',
         nume: 'Admin',
         prenume: 'CTGC',
         rol: 'super_admin',

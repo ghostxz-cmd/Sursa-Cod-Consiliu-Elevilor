@@ -246,36 +246,29 @@ export default function Header() {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          gap: '15px',
-          padding: '20px 0',
+          padding: '30px 0',
           borderBottom: '2px solid #e0e0e0',
           marginBottom: '15px'
         }}>
           <div style={{
-            width: '50px',
-            height: '50px',
+            width: '80px',
+            height: '80px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            border: '2px solid #ddd',
-            borderRadius: '8px',
-            backgroundColor: 'white'
+            border: '3px solid #1e88e5',
+            borderRadius: '12px',
+            backgroundColor: 'white',
+            boxShadow: '0 4px 12px rgba(30, 136, 229, 0.2)'
           }}>
             <Image
               src="/images/logo.png"
-              alt="Logo Școală"
-              width={45}
-              height={45}
+              alt="Consiliul Elevilor"
+              width={70}
+              height={70}
               style={{ objectFit: 'contain' }}
             />
           </div>
-          <Image
-            src="/images/cropped-logo_color_simplu.png"
-            alt="Consiliul Elevilor"
-            width={120}
-            height={40}
-            style={{ objectFit: 'contain' }}
-          />
         </div>
 
         {/* Menu Items */}

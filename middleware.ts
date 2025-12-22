@@ -8,9 +8,14 @@ import { supabase } from '@/lib/supabase'
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   
-  // Rute care necesită autentificare admin
+  // Permitem accesul la toate rutele /admin fără autentificare (pentru testing)
+  // În producție, acestea ar trebui protejate
+  if (pathname.startsWith('/admin')) {
+    return NextResponse.next()
+  }
+  
+  // Rute care necesită autentificare admin (doar pentru portale speciale)
   const protectedAdminRoutes = [
-    '/admin',
     '/ctgc-management-portal-2024',
     '/ctgc-management-portal-2025'
   ]

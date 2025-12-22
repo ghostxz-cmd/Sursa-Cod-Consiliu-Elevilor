@@ -4,10 +4,27 @@
   box-sizing: border-box;
 }
 
+/* Ascunde complet scrollbar-ul */
+::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+  background: transparent !important;
+}
+
+html {
+  overflow-x: hidden;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+  scroll-behavior: smooth;
+}
+
 html, body {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 body {
@@ -17,23 +34,38 @@ body {
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-/* Prevent horizontal scroll */
-html {
-  overflow-x: hidden;
-}
-
-/* Smooth scroll */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Responsive images */
-img {
+/* Previne drag pe imagini global */
+img, picture, video {
   max-width: 100%;
   height: auto;
   display: block;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  pointer-events: none;
+  -webkit-touch-callout: none;
+}
+
+/* Link-urile cu imagini rămân clicabile */
+a img {
+  pointer-events: auto;
+}
+
+/* Butoanele rămân interactive */
+a, button, input, textarea, select, label {
+  pointer-events: auto;
+  user-select: auto;
+  -webkit-user-select: auto;
 }
 
 /* Responsive typography base */

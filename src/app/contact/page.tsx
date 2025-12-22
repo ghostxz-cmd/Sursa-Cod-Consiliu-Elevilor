@@ -71,11 +71,11 @@ export default function ContactPage() {
               }}>
                 <p style={{ marginBottom: '15px' }}>
                   <strong style={{ color: '#333' }}>Email:</strong><br />
-                  <a href="mailto:ctgc.pn@gmail.com" style={{
+                  <a href="mailto:cse.ctgc@colegiulcartianu.ro" style={{
                     color: '#1e88e5',
                     textDecoration: 'none'
                   }}>
-                    ctgc.pn@gmail.com
+                    cse.ctgc@colegiulcartianu.ro
                   </a>
                 </p>
               </div>
